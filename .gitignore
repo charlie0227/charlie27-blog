@@ -1,0 +1,4 @@
+.env
+*.zip
+push-to-github.sh
+scraps/
