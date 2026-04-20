@@ -41,8 +41,14 @@ while (have_posts()): the_post(); ?>
     </div>
     <?php endif; ?>
 
-    <div class="post-layout">
-      <?php cfn_the_toc(); ?>
+    <?php
+    // Detect whether TOC will render (needs at least one <h2>)
+    $raw = apply_filters('the_content', get_the_content());
+    $has_toc = (bool) preg_match('/<h2/i', $raw);
+    $layout_class = 'post-layout' . ($has_toc ? ' has-toc' : ' no-toc');
+    ?>
+    <div class="<?php echo esc_attr($layout_class); ?>">
+      <?php if ($has_toc) cfn_the_toc(); ?>
 
       <div class="post-body">
         <?php the_content(); ?>
