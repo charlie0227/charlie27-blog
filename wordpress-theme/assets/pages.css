@@ -6,17 +6,17 @@
 .home-hero {
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:var(--s8);
+  gap:var(--s6);
   align-items:center;
-  padding:var(--s8) 0 var(--s7);
+  padding:var(--s6) 0 var(--s5);
 }
 .home-hero__title {
   font-family:var(--serif);
-  font-size:clamp(36px,4vw,60px);
-  font-weight:400;
-  line-height:1.1;
-  letter-spacing:-.025em;
-  margin-bottom:var(--s4);
+  font-size:clamp(28px,3.2vw,48px);
+  font-weight:600;
+  line-height:1.15;
+  letter-spacing:-.02em;
+  margin-bottom:var(--s3);
 }
 .home-hero__title em { font-style:italic; color:var(--accent); }
 .home-hero__desc {
@@ -24,13 +24,13 @@
   color:var(--text-2); max-width:400px;
 }
 .home-stats {
-  display:flex; gap:var(--s7); margin-bottom:var(--s5);
+  display:flex; gap:var(--s6); margin-bottom:var(--s4);
 }
 .home-stat__num {
   display:block;
   font-family:var(--serif);
-  font-size:54px; line-height:1;
-  letter-spacing:-.03em;
+  font-size:40px; line-height:1;
+  letter-spacing:-.02em;
 }
 .home-stat__label {
   display:block; margin-top:6px;
@@ -45,8 +45,8 @@
 /* Home layout: main + sidebar */
 .home-layout {
   display:grid;
-  grid-template-columns:1fr 300px;
-  gap:var(--s8);
+  grid-template-columns:1fr 280px;
+  gap:var(--s6);
   align-items:start;
 }
 .home-main { min-width:0; }
@@ -66,13 +66,13 @@
 
 /* Featured callout */
 .post-feature {
-  padding:var(--s5) var(--s6);
+  padding:var(--s4) var(--s5);
   border:1px solid var(--border-hi);
   border-radius:var(--r3);
   background:var(--bg-raise);
   position:relative;
   overflow:hidden;
-  margin-bottom:var(--s7);
+  margin-bottom:var(--s6);
 }
 .post-feature::before {
   content:"";
@@ -114,9 +114,9 @@
 .article-list { display:flex; flex-direction:column; }
 .post-row {
   display:grid;
-  grid-template-columns:120px 1fr;
-  gap:var(--s4) var(--s5);
-  padding:var(--s5) 0;
+  grid-template-columns:110px 1fr;
+  gap:var(--s3) var(--s4);
+  padding:var(--s4) 0;
   border-bottom:1px solid var(--border);
   align-items:start;
   transition:background var(--t);
@@ -191,21 +191,21 @@
 
 /* Post header */
 .post-header {
-  padding:var(--s7) 0 var(--s6);
+  padding:var(--s5) 0 var(--s5);
   max-width:860px;
   margin:0 auto;
   border-bottom:1px solid var(--border);
 }
 .post-header__meta {
   display:flex; align-items:center; gap:var(--s3);
-  margin-bottom:var(--s4);
+  margin-bottom:var(--s3);
   flex-wrap:wrap;
 }
 .post-title {
   font-family:var(--serif);
-  font-size:clamp(34px,4.5vw,58px);
-  font-weight:400; line-height:1.08;
-  letter-spacing:-.025em; margin-bottom:var(--s4);
+  font-size:clamp(26px,3.5vw,46px);
+  font-weight:600; line-height:1.15;
+  letter-spacing:-.02em; margin-bottom:var(--s3);
   text-wrap:balance;
 }
 .post-excerpt {
@@ -228,10 +228,10 @@
 .post-layout {
   display:grid;
   grid-template-columns:200px 1fr 200px;
-  gap:var(--s8);
+  gap:var(--s6);
   max-width:1240px;
   margin:0 auto;
-  padding-top:var(--s7);
+  padding-top:var(--s5);
 }
 
 /* Post layout — no TOC */
@@ -288,15 +288,15 @@
 .post-body > * + * { margin-top:1.5em; }
 .post-body h2 {
   font-family:var(--serif);
-  font-size:32px; font-weight:400; line-height:1.2;
-  letter-spacing:-.02em;
-  margin-top:var(--s8); margin-bottom:var(--s4);
-  padding-top:var(--s5); border-top:1px solid var(--border);
+  font-size:26px; font-weight:600; line-height:1.25;
+  letter-spacing:-.015em;
+  margin-top:var(--s6); margin-bottom:var(--s3);
+  padding-top:var(--s4); border-top:1px solid var(--border);
 }
 .post-body h3 {
-  font-size:21px; font-weight:600; line-height:1.3;
+  font-size:19px; font-weight:700; line-height:1.3;
   letter-spacing:-.01em;
-  margin-top:var(--s6); margin-bottom:var(--s3);
+  margin-top:var(--s5); margin-bottom:var(--s2);
 }
 .post-body h4 {
   font-size:16px; font-weight:600;
@@ -304,7 +304,7 @@
   text-transform:uppercase; letter-spacing:.04em;
   font-family:var(--mono);
 }
-.post-body p { font-size:17.5px; line-height:1.78; color:var(--text); }
+.post-body p { font-size:16.5px; line-height:1.72; color:var(--text); }
 .post-body a { color:var(--accent); border-bottom:1px solid color-mix(in oklab,var(--accent) 40%,transparent); transition:all var(--t); }
 .post-body a:hover { border-bottom-color:var(--accent); background:var(--accent-bg); }
 .post-body ul,
@@ -383,13 +383,13 @@
 
 /* End of post */
 .post-end {
-  margin-top:var(--s8);
-  padding-top:var(--s5);
+  margin-top:var(--s6);
+  padding-top:var(--s4);
   border-top:1px solid var(--border);
 }
 
 /* Related posts */
-.related { padding:var(--s8) 0; }
+.related { padding:var(--s6) 0; }
 .related-grid {
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -420,7 +420,7 @@
 
 /* Newsletter inline */
 .newsletter-inline {
-  padding:var(--s7) var(--s7);
+  padding:var(--s5) var(--s6);
   border:1px solid var(--border);
   border-radius:var(--r3);
   background:var(--bg-raise);
@@ -436,15 +436,15 @@
 }
 .newsletter-inline__grid {
   display:grid;
-  grid-template-columns:1fr 380px;
-  gap:var(--s8); align-items:center;
+  grid-template-columns:1fr 340px;
+  gap:var(--s6); align-items:center;
   position:relative; z-index:1;
 }
 .newsletter-inline h3 {
   font-family:var(--serif);
-  font-size:34px; font-weight:400;
-  line-height:1.15; letter-spacing:-.02em;
-  margin:var(--s3) 0 var(--s3);
+  font-size:24px; font-weight:600;
+  line-height:1.2; letter-spacing:-.015em;
+  margin:var(--s2) 0 var(--s2);
 }
 .newsletter-inline p { font-size:14px; color:var(--text-2); line-height:1.65; }
 .newsletter-inline form { display:flex; flex-direction:column; gap:var(--s2); }
@@ -453,16 +453,16 @@
    ARCHIVE / CATEGORY
    ════════════════════════════════════════════════════════════════════ */
 .archive-header {
-  padding:var(--s7) 0 var(--s6);
+  padding:var(--s5) 0 var(--s4);
   border-bottom:1px solid var(--border);
-  margin-bottom:var(--s7);
+  margin-bottom:var(--s6);
 }
 .archive-title {
   font-family:var(--serif);
-  font-size:clamp(44px,6vw,80px);
-  font-weight:400; line-height:1;
-  letter-spacing:-.03em;
-  margin:var(--s3) 0 var(--s4);
+  font-size:clamp(32px,4.5vw,58px);
+  font-weight:600; line-height:1.1;
+  letter-spacing:-.02em;
+  margin:var(--s2) 0 var(--s3);
 }
 .archive-layout {
   display:grid;
