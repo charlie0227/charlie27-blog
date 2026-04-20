@@ -9,7 +9,8 @@ while (have_posts()): the_post(); ?>
         <?php
         $cats = get_the_category();
         if ($cats) {
-            echo '<a href="' . esc_url(get_category_link($cats[0])) . '" class="tag tag--accent">' . esc_html($cats[0]->name) . '</a>';
+            $cls = cfn_category_tag_class($cats[0]->slug);
+            echo '<a href="' . esc_url(get_category_link($cats[0])) . '" class="tag ' . esc_attr($cls) . '">' . esc_html($cats[0]->name) . '</a>';
         }
         ?>
         <span class="eyebrow"><?php echo get_the_date(); ?></span>
@@ -47,7 +48,7 @@ while (have_posts()): the_post(); ?>
         <?php the_content(); ?>
 
         <div class="post-end">
-          <div class="eyebrow" style="margin-bottom:16px">End of essay</div>
+          <div class="eyebrow" style="margin-bottom:16px">End of article</div>
           <?php cfn_ad_slot('728x90', 'End of article ad'); ?>
         </div>
       </div>
@@ -64,7 +65,7 @@ while (have_posts()): the_post(); ?>
     <div class="section-head">
       <div>
         <div class="eyebrow">Keep reading</div>
-        <h2 class="serif section-title">If you liked this, try</h2>
+        <h2 class="serif section-title">More on this topic</h2>
       </div>
     </div>
     <div class="related-grid">

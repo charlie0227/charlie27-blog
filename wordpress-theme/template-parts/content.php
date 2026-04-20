@@ -8,8 +8,9 @@
     <div class="img-placeholder img-placeholder--cream" style="aspect-ratio:4/3; border-radius:4px; margin-bottom:16px">Image</div>
   <?php endif; ?>
   <div class="flex items-center gap-3" style="margin-bottom:10px">
-    <?php $cats = get_the_category(); if ($cats): ?>
-      <span class="tag tag--accent"><?php echo esc_html($cats[0]->name); ?></span>
+    <?php $cats = get_the_category(); if ($cats):
+      $cls = cfn_category_tag_class($cats[0]->slug); ?>
+      <span class="tag <?php echo esc_attr($cls); ?>"><?php echo esc_html($cats[0]->name); ?></span>
     <?php endif; ?>
     <span class="eyebrow"><?php echo get_the_date(); ?></span>
   </div>

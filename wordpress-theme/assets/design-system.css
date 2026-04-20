@@ -269,9 +269,21 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; c
   background: var(--bg-elevated);
 }
 .tag--accent { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
-.tag--tech { color: var(--accent); border-color: var(--accent); }
-.tag--travel { color: #8B5A2B; border-color: #C9A77F; background: #F7EFE1; }
-[data-theme="dark"] .tag--travel { background: #2A1F10; border-color: #5A4628; color: #C9A77F; }
+.tag--tech    { color: var(--accent); border-color: var(--accent); }
+.tag--linux   { color: #5A6E3F; border-color: #8AA060; background: #EFF4E8; }
+.tag--docker  { color: #2E6D9E; border-color: #7AAECE; background: #EAF3FA; }
+.tag--js      { color: #7A6200; border-color: #C8A800; background: #FDF7DC; }
+.tag--python  { color: #2E6656; border-color: #5AA898; background: #E8F4F1; }
+.tag--cpp     { color: #5C3DA8; border-color: #9C7AE0; background: #F2EEF9; }
+.tag--db      { color: #3D5A8A; border-color: #7A9AC8; background: #EAF0F9; }
+.tag--ops     { color: #6E4A1C; border-color: #B8844A; background: #F9F0E4; }
+[data-theme="dark"] .tag--linux  { background: #1A2210; border-color: #4A6028; color: #A0C070; }
+[data-theme="dark"] .tag--docker { background: #0E1F2E; border-color: #2E5A80; color: #7AAECE; }
+[data-theme="dark"] .tag--js     { background: #201900; border-color: #806A00; color: #D4B000; }
+[data-theme="dark"] .tag--python { background: #0E1E1A; border-color: #2A6A58; color: #70C0A8; }
+[data-theme="dark"] .tag--cpp    { background: #180E30; border-color: #6040A0; color: #B090E8; }
+[data-theme="dark"] .tag--db     { background: #0E1830; border-color: #2A4A78; color: #90B0E0; }
+[data-theme="dark"] .tag--ops    { background: #201008; border-color: #704A18; color: #C09060; }
 
 /* Card */
 .card {

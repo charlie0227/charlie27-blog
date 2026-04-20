@@ -177,7 +177,29 @@ function cfn_excerpt_more() { return '…'; }
 add_filter('excerpt_more', 'cfn_excerpt_more');
 
 /* -------------------------------------------------------------------------
- * 10. Body class helpers
+ * 10. Category → tag CSS class mapping
+ * ------------------------------------------------------------------------- */
+function cfn_category_tag_class($slug) {
+    $map = [
+        'linux'        => 'tag--linux',
+        'bash'         => 'tag--linux',
+        'containerize' => 'tag--docker',
+        'docker'       => 'tag--docker',
+        'javascript'   => 'tag--js',
+        'python'       => 'tag--python',
+        'c'            => 'tag--cpp',
+        'cpp'          => 'tag--cpp',
+        'c-2'          => 'tag--cpp',
+        'databases'    => 'tag--db',
+        'git'          => 'tag--ops',
+        'windows'      => 'tag--ops',
+        'wordpress'    => 'tag--ops',
+    ];
+    return $map[$slug] ?? 'tag--tech';
+}
+
+/* -------------------------------------------------------------------------
+ * 11. Body class helpers
  * ------------------------------------------------------------------------- */
 function cfn_body_class($classes) {
     if (is_singular('post')) $classes[] = 'is-post';

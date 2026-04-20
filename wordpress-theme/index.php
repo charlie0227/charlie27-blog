@@ -26,7 +26,7 @@ get_header(); ?>
             <span><?php echo cfn_reading_time(); ?> min read</span>
           </span>
         </div>
-        <a href="<?php the_permalink(); ?>" class="btn btn--accent">Read the essay →</a>
+        <a href="<?php the_permalink(); ?>" class="btn btn--accent">Read the article →</a>
       </div>
       <div class="hero-image">
         <?php if (has_post_thumbnail()): ?>
@@ -46,8 +46,8 @@ get_header(); ?>
       <section class="latest-grid-section">
         <div class="section-head">
           <div>
-            <div class="eyebrow">Latest dispatches</div>
-            <h2 class="serif section-title">Recently filed</h2>
+            <div class="eyebrow">Latest articles</div>
+            <h2 class="serif section-title">Recently published</h2>
           </div>
         </div>
         <div class="latest-grid">

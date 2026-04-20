@@ -36,13 +36,14 @@
     <div class="footer-col">
       <h5>Elsewhere</h5>
       <ul>
-        <li><a href="#">Email</a></li>
+        <li><a href="https://github.com/charlie0227" target="_blank" rel="noopener">GitHub</a></li>
         <li><a href="<?php echo esc_url(get_feed_link()); ?>">RSS</a></li>
+        <li><a href="mailto:charlie19950227@gmail.com">Email</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© <?php echo date('Y'); ?> <?php bloginfo('name'); ?> · All words original unless quoted</span>
+    <span>© <?php echo date('Y'); ?> <?php bloginfo('name'); ?> · Notes from the trenches of full-stack dev</span>
     <span>Powered by WordPress + Charlie's Field Notes theme</span>
   </div>
 </footer>
