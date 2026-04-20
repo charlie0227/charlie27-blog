@@ -1,30 +1,81 @@
-/* assets/site.js — progress bar, to-top, theme toggle */
+/* Charlie's Field Notes — site.js */
 (function () {
-  var progress = document.getElementById('reading-progress');
-  var toTop = document.getElementById('to-top');
-  var toggle = document.getElementById('theme-toggle');
+  var html = document.documentElement;
 
-  function onScroll() {
-    var h = document.documentElement;
-    var top = h.scrollTop || document.body.scrollTop;
-    var height = h.scrollHeight - h.clientHeight;
-    var pct = height > 0 ? (top / height) * 100 : 0;
-    if (progress) progress.style.width = pct + '%';
-    if (toTop) toTop.classList.toggle('is-visible', top > 600);
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  /* ── Dark mode: apply before paint to avoid flash ─────────────── */
+  var saved = localStorage.getItem('cfn-theme');
+  var prefersDark = window.matchMedia('(prefers-color-scheme:dark)').matches;
+  html.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
 
-  if (toTop) toTop.addEventListener('click', function () {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+  document.addEventListener('DOMContentLoaded', function () {
 
-  // Theme toggle (persists to localStorage)
-  var stored = localStorage.getItem('cfn-theme');
-  if (stored) document.documentElement.dataset.theme = stored;
-  if (toggle) toggle.addEventListener('click', function () {
-    var next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-    document.documentElement.dataset.theme = next;
-    localStorage.setItem('cfn-theme', next);
+    /* ── Theme toggle ─────────────────────────────────────────── */
+    var btn = document.getElementById('theme-toggle');
+    if (btn) {
+      btn.addEventListener('click', function () {
+        var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('cfn-theme', next);
+      });
+    }
+
+    /* ── Reading progress bar ─────────────────────────────────── */
+    var bar = document.getElementById('reading-bar');
+    function updateBar() {
+      if (!bar) return;
+      var h = document.documentElement;
+      var pct = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
+      bar.style.width = Math.min(100, pct || 0) + '%';
+    }
+    window.addEventListener('scroll', updateBar, { passive: true });
+
+    /* ── Scroll-to-top ────────────────────────────────────────── */
+    var top = document.getElementById('to-top');
+    if (top) {
+      window.addEventListener('scroll', function () {
+        top.classList.toggle('visible', window.scrollY > 500);
+      }, { passive: true });
+      top.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    /* ── TOC active highlight (IntersectionObserver) ──────────── */
+    var tocLinks = document.querySelectorAll('.post-toc a');
+    if (tocLinks.length) {
+      var headings = Array.from(document.querySelectorAll('.post-body h2[id]'));
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            var id = e.target.getAttribute('id');
+            tocLinks.forEach(function (a) {
+              a.classList.toggle('is-active', a.getAttribute('href') === '#' + id);
+            });
+          }
+        });
+      }, { rootMargin: '-15% 0px -70% 0px' });
+      headings.forEach(function (h) { observer.observe(h); });
+    }
+
+    /* ── ⌘K / Ctrl+K → focus search ──────────────────────────── */
+    document.addEventListener('keydown', function (e) {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        var s = document.querySelector('input[type="search"]');
+        if (s) s.focus();
+        else window.location.href = '/?s=';
+      }
+    });
+
+    /* ── Copy-link share button ───────────────────────────────── */
+    document.querySelectorAll('[data-share="copy"]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        navigator.clipboard.writeText(window.location.href).then(function () {
+          var orig = el.textContent;
+          el.textContent = '✓ Copied';
+          setTimeout(function () { el.textContent = orig; }, 2000);
+        });
+      });
+    });
   });
 })();

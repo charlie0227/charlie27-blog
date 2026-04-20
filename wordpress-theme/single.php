@@ -1,90 +1,120 @@
 <?php /* single.php — Single post */
 get_header();
-while (have_posts()): the_post(); ?>
+while (have_posts()): the_post();
+
+  // Detect TOC (needs ≥1 <h2>)
+  $raw     = apply_filters('the_content', get_the_content());
+  $has_toc = (bool) preg_match('/<h2/i', $raw);
+  $cats    = get_the_category();
+  $cls     = $cats ? cfn_category_tag_class($cats[0]->slug) : 'tag--tech';
+?>
 
 <article>
-  <div class="container">
+  <div class="wrap">
+
+    <!-- ── Post header ───────────────────────────────────────────── -->
     <header class="post-header">
-      <div class="flex items-center gap-3" style="margin-bottom:8px">
-        <?php
-        $cats = get_the_category();
-        if ($cats) {
-            $cls = cfn_category_tag_class($cats[0]->slug);
-            echo '<a href="' . esc_url(get_category_link($cats[0])) . '" class="tag ' . esc_attr($cls) . '">' . esc_html($cats[0]->name) . '</a>';
-        }
-        ?>
-        <span class="eyebrow"><?php echo get_the_date(); ?></span>
+      <div class="post-header__meta">
+        <?php if ($cats): ?>
+          <a href="<?php echo esc_url(get_category_link($cats[0])); ?>"
+             class="tag <?php echo esc_attr($cls); ?>">
+            <?php echo esc_html($cats[0]->name); ?>
+          </a>
+        <?php endif; ?>
+        <span class="label"><?php echo get_the_date(); ?></span>
       </div>
+
       <h1 class="post-title"><?php the_title(); ?></h1>
+
       <?php if (get_the_excerpt()): ?>
-        <p style="font-size:20px; line-height:1.55; color:var(--text-muted); max-width:720px; font-family:var(--font-serif); font-style:italic">
-          <?php echo esc_html(get_the_excerpt()); ?>
-        </p>
+        <p class="post-excerpt"><?php echo esc_html(get_the_excerpt()); ?></p>
       <?php endif; ?>
-      <div class="post-header-meta">
-        <div class="post-author">
-          <div class="post-author__avatar"><?php echo esc_html(strtoupper(substr(get_the_author(), 0, 1))); ?></div>
-          <div class="post-author__info">
-            <span class="post-author__name"><?php the_author(); ?></span>
-            <span class="post-author__role"><?php echo esc_html(get_the_author_meta('description')); ?></span>
-          </div>
-        </div>
-        <span class="post-meta" style="margin-left:auto">
-          <span><?php echo cfn_reading_time(); ?> min read</span>
-        </span>
+
+      <div class="post-byline">
+        <span>Charlie</span>
+        <span class="post-byline__sep">·</span>
+        <a href="https://github.com/charlie0227" target="_blank" rel="noopener">github.com/charlie0227</a>
+        <span class="post-byline__sep">·</span>
+        <span><?php echo cfn_reading_time(); ?> min read</span>
       </div>
     </header>
 
-    <?php if (has_post_thumbnail()): ?>
-    <div class="post-hero">
-      <?php the_post_thumbnail('cfn-hero'); ?>
-    </div>
-    <?php endif; ?>
+    <!-- ── Post layout ───────────────────────────────────────────── -->
+    <div class="post-layout <?php echo $has_toc ? 'has-toc' : 'no-toc'; ?>">
 
-    <?php
-    // Detect whether TOC will render (needs at least one <h2>)
-    $raw = apply_filters('the_content', get_the_content());
-    $has_toc = (bool) preg_match('/<h2/i', $raw);
-    $layout_class = 'post-layout' . ($has_toc ? ' has-toc' : ' no-toc');
-    ?>
-    <div class="<?php echo esc_attr($layout_class); ?>">
-      <?php if ($has_toc) cfn_the_toc(); ?>
+      <?php if ($has_toc): ?>
+        <?php cfn_the_toc(); ?>
+      <?php endif; ?>
 
+      <!-- Body -->
       <div class="post-body">
         <?php the_content(); ?>
 
         <div class="post-end">
-          <div class="eyebrow" style="margin-bottom:16px">End of article</div>
-          <?php cfn_ad_slot('728x90', 'End of article ad'); ?>
+          <span class="label">End of article</span>
+          <?php if (get_option('cfn_ad_728_90')): ?>
+          <div style="margin-top:var(--s4)">
+            <?php cfn_ad_slot('728x90', 'End of article ad'); ?>
+          </div>
+          <?php endif; ?>
         </div>
       </div>
 
+      <!-- Aside (share, ad) — hidden on no-toc at <1100px -->
       <aside class="post-aside">
-        <?php if (is_active_sidebar('sidebar-post')) dynamic_sidebar('sidebar-post'); ?>
+        <div class="post-share">
+          <span class="label" style="display:block; margin-bottom:var(--s2)">Share</span>
+          <button class="post-share-btn" data-share="copy">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+            Copy link
+          </button>
+          <button class="post-share-btn" data-share="twitter">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
+            </svg>
+            Share on X
+          </button>
+        </div>
         <?php cfn_ad_slot('300x600', 'Half-page'); ?>
       </aside>
-    </div>
+
+    </div><!-- /.post-layout -->
   </div>
 
-  <?php $related = cfn_related_posts(3); if ($related->have_posts()): ?>
-  <section class="container related">
+  <!-- ── Related posts ─────────────────────────────────────────── -->
+  <?php $related = cfn_related_posts(3);
+  if ($related->have_posts()): ?>
+  <section class="wrap related">
+    <hr class="rule" style="margin-bottom:var(--s7)">
     <div class="section-head">
-      <div>
-        <div class="eyebrow">Keep reading</div>
-        <h2 class="serif section-title">More on this topic</h2>
-      </div>
+      <h2>More on this topic</h2>
     </div>
     <div class="related-grid">
       <?php while ($related->have_posts()): $related->the_post();
-          get_template_part('template-parts/content');
-      endwhile; wp_reset_postdata(); ?>
+        $rcats = get_the_category();
+        $rcls  = $rcats ? cfn_category_tag_class($rcats[0]->slug) : 'tag--tech';
+      ?>
+      <a href="<?php the_permalink(); ?>" class="related-card">
+        <div class="related-card__tag">
+          <span class="tag <?php echo esc_attr($rcls); ?>"><?php echo esc_html($rcats ? $rcats[0]->name : ''); ?></span>
+        </div>
+        <div class="related-card__title"><?php the_title(); ?></div>
+        <div class="related-card__meta">
+          <?php echo get_the_date('M j, Y'); ?> · <?php echo cfn_reading_time(); ?> min read
+        </div>
+      </a>
+      <?php endwhile; wp_reset_postdata(); ?>
     </div>
   </section>
   <?php endif; ?>
 
-  <div class="container" style="margin-top:80px">
+  <!-- ── Newsletter ────────────────────────────────────────────── -->
+  <div class="wrap" style="margin-top:var(--s8)">
     <?php get_template_part('template-parts/newsletter-inline'); ?>
   </div>
+
 </article>
 
 <?php endwhile; get_footer();

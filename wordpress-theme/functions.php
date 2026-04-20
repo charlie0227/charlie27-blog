@@ -94,13 +94,9 @@ function cfn_reading_time($post_id = null) {
  * ------------------------------------------------------------------------- */
 function cfn_ad_slot($size = '728x90', $label = 'Sponsored') {
     $code = get_option('cfn_ad_' . str_replace('x', '_', $size), '');
+    if (!$code) return;
     echo '<div class="ad-slot" style="aspect-ratio:' . esc_attr(str_replace('x', '/', $size)) . '">';
-    if ($code) {
-        echo $code; // raw ad HTML (e.g. AdSense snippet)
-    } else {
-        echo '<div><div class="ad-slot__label">' . esc_html($label) . '</div>';
-        echo '<div class="ad-slot__size">' . esc_html($size) . '</div></div>';
-    }
+    echo $code;
     echo '</div>';
 }
 
@@ -170,7 +166,7 @@ add_filter('the_content', 'cfn_add_heading_ids', 20);
 /* -------------------------------------------------------------------------
  * 9. Excerpt niceties
  * ------------------------------------------------------------------------- */
-function cfn_excerpt_length() { return 28; }
+function cfn_excerpt_length() { return 30; }
 add_filter('excerpt_length', 'cfn_excerpt_length');
 
 function cfn_excerpt_more() { return '…'; }
