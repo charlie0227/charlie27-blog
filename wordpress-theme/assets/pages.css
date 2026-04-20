@@ -1,5 +1,135 @@
 /* Home-specific styles — Hero variants, grids, sidebar, popular, affiliate */
 
+/* ── Homepage: text-first layout ─────────────────────────────────── */
+.home-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  padding: 56px 0 40px;
+}
+.home-hero__title {
+  font-family: var(--font-serif);
+  font-size: clamp(38px, 4.5vw, 64px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-bottom: 20px;
+}
+.home-hero__title em { font-style: italic; color: var(--accent); }
+.home-hero__desc {
+  font-size: 16px;
+  color: var(--text-muted);
+  line-height: 1.65;
+  max-width: 420px;
+}
+.home-stats {
+  display: flex;
+  gap: 48px;
+  margin-bottom: 28px;
+}
+.home-stat__num {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 52px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.home-stat__label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+.home-cat-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Article list */
+.article-list {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Post row (text-first card) */
+.post-row {
+  padding: 28px 0;
+  border-bottom: 1px solid var(--border);
+  display: block;
+}
+.post-row--featured {
+  padding: 32px 28px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+  position: relative;
+}
+.post-row--featured::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--accent);
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+}
+.post-row__meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.post-row__pin {
+  color: var(--accent);
+  letter-spacing: 0.08em;
+}
+.post-row__title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.post-row--featured .post-row__title {
+  font-size: 24px;
+}
+.post-row__title a { color: var(--text); }
+.post-row__title a:hover { color: var(--accent); }
+.post-row__excerpt {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 12px;
+  max-width: 680px;
+}
+.post-row__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--text-subtle);
+  text-transform: uppercase;
+}
+.post-row__cta {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: opacity var(--transition);
+}
+.post-row__cta:hover { opacity: 0.7; }
+
+/* Home layout */
+.home-main { min-width: 0; }
+
 /* Hero — Editorial */
 .hero--editorial .hero-grid {
   display: grid;
@@ -324,13 +454,17 @@
 }
 /* No TOC: collapse left column, centre content */
 .post-layout.no-toc {
-  grid-template-columns: 1fr minmax(0, 800px) 1fr;
+  grid-template-columns: 1fr minmax(0, 800px) minmax(0, 240px);
 }
 .post-layout.no-toc .post-body {
-  max-width: none;
+  grid-column: 1 / 3;
+  max-width: 760px;
+  margin: 0 auto;
+  width: 100%;
 }
 .post-layout.no-toc .post-aside {
   grid-column: 3;
+  grid-row: 1;
 }
 .post-toc {
   position: sticky;
@@ -676,14 +810,15 @@
 @media (max-width: 1100px) {
   .post-layout,
   .post-layout.no-toc { grid-template-columns: 1fr; }
-  .post-layout.no-toc .post-aside { grid-column: 1; }
-  .post-layout.no-toc .post-body { max-width: 720px; margin: 0 auto; }
+  .post-layout.no-toc .post-body { grid-column: 1; max-width: 720px; margin: 0 auto; }
+  .post-layout.no-toc .post-aside { grid-column: 1; grid-row: auto; }
   .post-toc, .post-aside { position: static; }
   .post-aside { order: 10; }
   .home-layout { grid-template-columns: 1fr; }
   .category-list { grid-template-columns: 1fr; }
   .affiliate-grid { grid-template-columns: repeat(2, 1fr); }
   .related-grid { grid-template-columns: 1fr; }
+  .home-hero { grid-template-columns: 1fr; gap: 32px; padding: 32px 0 24px; }
   .hero--editorial .hero-grid { grid-template-columns: 1fr; gap: 40px; }
   .hero-index-top { grid-template-columns: 1fr; gap: 32px; }
   .hero-index-grid { grid-template-columns: 1fr; }
