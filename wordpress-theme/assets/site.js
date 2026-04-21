@@ -57,14 +57,29 @@
       headings.forEach(function (h) { observer.observe(h); });
     }
 
-    /* ── ⌘K / Ctrl+K → focus search ──────────────────────────── */
+    /* ── Search toggle ────────────────────────────────────────── */
+    var searchBar  = document.getElementById('site-search');
+    var searchBtn  = document.getElementById('search-btn');
+    var searchClose = document.getElementById('search-close');
+    function openSearch() {
+      if (!searchBar) return;
+      searchBar.hidden = false;
+      var inp = searchBar.querySelector('input');
+      if (inp) inp.focus();
+    }
+    function closeSearch() {
+      if (searchBar) searchBar.hidden = true;
+    }
+    if (searchBtn)  searchBtn.addEventListener('click', openSearch);
+    if (searchClose) searchClose.addEventListener('click', closeSearch);
+
+    /* ── ⌘K / Ctrl+K → open search ───────────────────────────── */
     document.addEventListener('keydown', function (e) {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
-        var s = document.querySelector('input[type="search"]');
-        if (s) s.focus();
-        else window.location.href = '/?s=';
+        openSearch();
       }
+      if (e.key === 'Escape') closeSearch();
     });
 
     /* ── Copy-link share button ───────────────────────────────── */
