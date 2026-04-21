@@ -1,5 +1,8 @@
-<?php /* index.php — Homepage */
-get_header(); ?>
+<?php /* index.php — Homepage (news-style) */
+get_header();
+$total = wp_count_posts()->publish;
+$cats  = get_categories(['hide_empty' => true]);
+?>
 
 <?php if (get_option('cfn_ad_970_90')): ?>
 <div class="wrap" style="padding-top:var(--s4); padding-bottom:var(--s3)">
@@ -7,51 +10,36 @@ get_header(); ?>
 </div>
 <?php endif; ?>
 
-<main class="wrap" style="padding-bottom:var(--s9)">
+<main style="padding-bottom:var(--s8)">
 
-  <!-- ── Hero ──────────────────────────────────────────────────────── -->
-  <section class="home-hero">
-    <div class="home-hero__left">
-      <span class="label">Charlie's Field Notes</span>
-      <h1 class="home-hero__title">
-        Dev notes on <em>Linux,</em><br>
-        Docker &amp; backend.
-      </h1>
-      <p class="home-hero__desc"><?php bloginfo('description'); ?></p>
-    </div>
-    <div class="home-hero__right">
-      <?php
-      $total = wp_count_posts()->publish;
-      $cats  = get_categories(['hide_empty' => true]);
-      ?>
-      <div class="home-stats">
-        <div class="home-stat">
-          <span class="home-stat__num"><?php echo $total; ?></span>
-          <span class="home-stat__label">Articles</span>
-        </div>
-        <div class="home-stat">
-          <span class="home-stat__num"><?php echo count($cats); ?></span>
-          <span class="home-stat__label">Topics</span>
+  <!-- ── Masthead ──────────────────────────────────────────────────── -->
+  <div class="wrap">
+    <div class="masthead">
+      <div class="masthead__left">
+        <h1 class="masthead__title">Dev notes on <em>Linux, Docker &amp; backend.</em></h1>
+        <div class="masthead__tags">
+          <?php foreach ($cats as $c):
+            $cls = cfn_category_tag_class($c->slug); ?>
+            <a href="<?php echo esc_url(get_category_link($c)); ?>" class="tag <?php echo esc_attr($cls); ?>">
+              <?php echo esc_html($c->name); ?>
+            </a>
+          <?php endforeach; ?>
         </div>
       </div>
-      <div class="home-cat-cloud">
-        <?php foreach ($cats as $c):
-          $cls = cfn_category_tag_class($c->slug); ?>
-          <a href="<?php echo esc_url(get_category_link($c)); ?>" class="tag <?php echo esc_attr($cls); ?>">
-            <?php echo esc_html($c->name); ?>
-          </a>
-        <?php endforeach; ?>
+      <div class="masthead__right">
+        <span class="masthead__stat"><?php echo $total; ?> <em>articles</em></span>
+        <span class="masthead__stat"><?php echo count($cats); ?> <em>topics</em></span>
       </div>
     </div>
-  </section>
+  </div>
 
-  <hr class="rule" style="margin:var(--s6) 0 var(--s7)">
+  <div class="wrap masthead-rule"><hr class="rule"></div>
 
-  <!-- ── Main + Sidebar ────────────────────────────────────────────── -->
-  <div class="home-layout">
+  <!-- ── Main layout ───────────────────────────────────────────────── -->
+  <div class="wrap home-layout">
     <div class="home-main">
 
-      <!-- Featured / latest post -->
+      <!-- Latest / Featured -->
       <?php
       $hero_q = new WP_Query(['posts_per_page' => 1, 'meta_key' => '_cfn_featured', 'meta_value' => '1']);
       if (!$hero_q->have_posts()) $hero_q = new WP_Query(['posts_per_page' => 1]);
@@ -68,7 +56,7 @@ get_header(); ?>
             </a>
           <?php endif; ?>
           <span class="post-feature__pin">★ Latest</span>
-          <span class="label" style="margin-left:auto"><?php echo get_the_date(); ?></span>
+          <time class="label" style="margin-left:auto"><?php echo get_the_date('M j, Y'); ?></time>
         </div>
         <h2 class="post-feature__title">
           <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
@@ -78,42 +66,43 @@ get_header(); ?>
         <?php endif; ?>
         <div class="post-feature__foot">
           <span><?php echo cfn_reading_time(); ?> min read</span>
-          <a href="<?php the_permalink(); ?>" class="post-feature__cta">Read article →</a>
+          <a href="<?php the_permalink(); ?>" class="post-feature__cta">Read →</a>
         </div>
       </article>
       <?php endif; wp_reset_postdata(); ?>
 
-      <!-- Article list -->
-      <div class="section-head" style="margin-top:var(--s7)">
+      <!-- Article card grid -->
+      <div class="section-head">
         <h2>All articles</h2>
-        <span class="label"><?php echo $total - 1; ?> more</span>
+        <span class="label"><?php echo $total; ?> total</span>
       </div>
 
-      <div class="article-list">
+      <div class="article-grid">
         <?php
-        $latest = new WP_Query(['posts_per_page' => 20, 'offset' => 1]);
+        $latest = new WP_Query(['posts_per_page' => 24, 'offset' => 1]);
         while ($latest->have_posts()): $latest->the_post();
           $cats = get_the_category();
           $cls  = $cats ? cfn_category_tag_class($cats[0]->slug) : 'tag--tech';
         ?>
-        <article class="post-row">
-          <div class="post-row__side">
+        <article class="post-card">
+          <div class="post-card__meta">
             <?php if ($cats): ?>
               <a href="<?php echo esc_url(get_category_link($cats[0])); ?>"
                  class="tag <?php echo esc_attr($cls); ?>">
                 <?php echo esc_html($cats[0]->name); ?>
               </a>
             <?php endif; ?>
-            <span class="post-row__date"><?php echo get_the_date('M j, Y'); ?></span>
-            <span class="post-row__time"><?php echo cfn_reading_time(); ?> min</span>
+            <time class="post-card__date"><?php echo get_the_date('M j'); ?></time>
           </div>
-          <div class="post-row__main">
-            <h3 class="post-row__title">
-              <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-            </h3>
-            <?php if (get_the_excerpt()): ?>
-              <p class="post-row__excerpt"><?php echo esc_html(get_the_excerpt()); ?></p>
-            <?php endif; ?>
+          <h3 class="post-card__title">
+            <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+          </h3>
+          <?php if (get_the_excerpt()): ?>
+            <p class="post-card__excerpt"><?php echo esc_html(get_the_excerpt()); ?></p>
+          <?php endif; ?>
+          <div class="post-card__foot">
+            <span><?php echo cfn_reading_time(); ?> min</span>
+            <a href="<?php the_permalink(); ?>">Read →</a>
           </div>
         </article>
         <?php endwhile; wp_reset_postdata(); ?>
@@ -141,7 +130,7 @@ get_header(); ?>
       <div class="sidebar-block">
         <span class="label">Tags</span>
         <div class="tag-cloud" style="margin-top:var(--s3)">
-          <?php foreach (get_tags(['number' => 15]) as $t): ?>
+          <?php foreach (get_tags(['number' => 20]) as $t): ?>
             <a href="<?php echo esc_url(get_tag_link($t)); ?>" class="tag">#<?php echo esc_html($t->name); ?></a>
           <?php endforeach; ?>
         </div>
@@ -149,20 +138,12 @@ get_header(); ?>
 
       <?php if (get_option('cfn_ad_300_250')): ?>
       <div class="sidebar-block">
-        <span class="label">Sponsored</span>
         <?php cfn_ad_slot('300x250', 'Display'); ?>
       </div>
       <?php endif; ?>
 
     </aside>
   </div><!-- /.home-layout -->
-
-  <?php if (get_option('cfn_ad_970_250')): ?>
-  <div style="margin:var(--s8) 0">
-    <?php cfn_ad_slot('970x250', 'Billboard'); ?>
-  </div>
-  <?php endif; ?>
-
 
 </main>
 
