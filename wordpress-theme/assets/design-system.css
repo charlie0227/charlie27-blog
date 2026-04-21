@@ -206,6 +206,7 @@ button,input,select,textarea { font:inherit; }
 .tag--cpp    { color:#5A3AA0; border-color:#9470D8; background:#F0EAF8; }
 .tag--db     { color:#2A4A88; border-color:#6A8EC8; background:#E5EEF8; }
 .tag--ops    { color:#6A4A1C; border-color:#B08048; background:#F8F0E4; }
+.tag--news   { color:#8B2252; border-color:#C45A8A; background:#FAE8F2; }
 .tag--tech   { color:var(--accent); border-color:var(--accent); background:var(--accent-bg); }
 
 [data-theme="dark"] .tag--linux  { color:#90BE68; border-color:#4A6830; background:#141E0A; }
@@ -215,6 +216,7 @@ button,input,select,textarea { font:inherit; }
 [data-theme="dark"] .tag--cpp    { color:#B098E8; border-color:#583888; background:#140A28; }
 [data-theme="dark"] .tag--db     { color:#88B0E0; border-color:#284870; background:#0A1428; }
 [data-theme="dark"] .tag--ops    { color:#C09060; border-color:#684820; background:#201008; }
+[data-theme="dark"] .tag--news   { color:#E080B0; border-color:#702050; background:#280818; }
 
 /* ─── Buttons ─────────────────────────────────────────────────────── */
 .btn {

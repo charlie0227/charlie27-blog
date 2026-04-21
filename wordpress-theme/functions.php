@@ -190,6 +190,7 @@ function cfn_category_tag_class($slug) {
         'git'          => 'tag--ops',
         'windows'      => 'tag--ops',
         'wordpress'    => 'tag--ops',
+        'daily-news'   => 'tag--news',
     ];
     return $map[$slug] ?? 'tag--tech';
 }
