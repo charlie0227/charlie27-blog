@@ -110,10 +110,6 @@ while (have_posts()): the_post();
   </section>
   <?php endif; ?>
 
-  <!-- ── Newsletter ────────────────────────────────────────────── -->
-  <div class="wrap" style="margin-top:var(--s8)">
-    <?php get_template_part('template-parts/newsletter-inline'); ?>
-  </div>
 
 </article>
 

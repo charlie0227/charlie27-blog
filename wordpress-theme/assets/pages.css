@@ -170,19 +170,6 @@
   color:var(--text-4); letter-spacing:.06em;
 }
 .tag-cloud { display:flex; flex-wrap:wrap; gap:6px; }
-.newsletter-box {
-  padding:var(--s5);
-  border:1px solid var(--border);
-  border-radius:var(--r3);
-  background:var(--bg-raise);
-}
-.newsletter-box h4 {
-  font-family:var(--serif); font-style:italic;
-  font-size:20px; font-weight:400;
-  line-height:1.2; margin:var(--s2) 0 var(--s2);
-}
-.newsletter-box p { font-size:13px; color:var(--text-2); line-height:1.55; margin-bottom:var(--s4); }
-.newsletter-box form { display:flex; flex-direction:column; gap:var(--s2); }
 
 
 /* ════════════════════════════════════════════════════════════════════
@@ -418,36 +405,6 @@
   color:var(--text-4);
 }
 
-/* Newsletter inline */
-.newsletter-inline {
-  padding:var(--s5) var(--s6);
-  border:1px solid var(--border);
-  border-radius:var(--r3);
-  background:var(--bg-raise);
-  position:relative; overflow:hidden;
-}
-.newsletter-inline::after {
-  content:"";
-  position:absolute; right:-60px; top:-60px;
-  width:240px; height:240px;
-  border-radius:50%;
-  background:radial-gradient(circle,var(--accent-bg) 0%,transparent 70%);
-  pointer-events:none;
-}
-.newsletter-inline__grid {
-  display:grid;
-  grid-template-columns:1fr 340px;
-  gap:var(--s6); align-items:center;
-  position:relative; z-index:1;
-}
-.newsletter-inline h3 {
-  font-family:var(--serif);
-  font-size:24px; font-weight:600;
-  line-height:1.2; letter-spacing:-.015em;
-  margin:var(--s2) 0 var(--s2);
-}
-.newsletter-inline p { font-size:14px; color:var(--text-2); line-height:1.65; }
-.newsletter-inline form { display:flex; flex-direction:column; gap:var(--s2); }
 
 /* ════════════════════════════════════════════════════════════════════
    ARCHIVE / CATEGORY

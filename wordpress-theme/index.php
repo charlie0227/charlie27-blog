@@ -126,8 +126,6 @@ get_header(); ?>
     <!-- Sidebar -->
     <aside class="home-sidebar">
 
-      <?php get_template_part('template-parts/newsletter-sidebar'); ?>
-
       <div class="sidebar-block">
         <span class="label">Topics</span>
         <ul class="sidebar-cats">
@@ -165,8 +163,6 @@ get_header(); ?>
   </div>
   <?php endif; ?>
 
-  <hr class="rule" style="margin:var(--s7) 0">
-  <?php get_template_part('template-parts/newsletter-inline'); ?>
 
 </main>
 
