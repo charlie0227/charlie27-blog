@@ -170,6 +170,7 @@
 .sidebar-cats li:last-child { border-bottom:0; }
 .sidebar-cats a { color:var(--text-2); transition:color var(--t); }
 .sidebar-cats a:hover { color:var(--accent); }
+.sidebar-cats a.sidebar-active { color:var(--accent); font-weight:600; }
 .sidebar-cats .count {
   font-family:var(--mono); font-size:10px;
   color:var(--text-4); letter-spacing:.06em;

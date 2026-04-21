@@ -7,7 +7,7 @@
         <span class="site-logo__dot"></span><?php bloginfo('name'); ?>
       </div>
       <p style="font-size:13px; line-height:1.65; color:var(--text-2); max-width:300px">
-        <?php bloginfo('description'); ?>
+        <?php echo esc_html(str_replace(['Charlie Chen', 'Charlie Chen'], 'Charlie', get_bloginfo('description'))); ?>
       </p>
       <p style="margin-top:var(--s3); font-size:13px; color:var(--text-3); line-height:1.55">
         A self-motivated developer with high passion in coding technique and a great interest in Web Security.

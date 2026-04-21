@@ -1,37 +1,23 @@
 <?php /* sidebar.php */ ?>
 <aside class="home-sidebar">
-  <?php get_template_part('template-parts/newsletter-sidebar'); ?>
-
-  <div class="sidebar-section">
-    <div class="eyebrow">Sponsored</div>
-    <?php cfn_ad_slot('300x250', 'Display'); ?>
+  <div class="sidebar-block">
+    <span class="label">Topics</span>
+    <ul class="sidebar-cats">
+      <?php foreach (get_categories(['hide_empty' => true]) as $c): ?>
+        <li>
+          <a href="<?php echo esc_url(get_category_link($c)); ?>"><?php echo esc_html($c->name); ?></a>
+          <span class="count"><?php echo $c->count; ?></span>
+        </li>
+      <?php endforeach; ?>
+    </ul>
   </div>
 
-  <?php if (is_active_sidebar('sidebar-primary')): ?>
-    <?php dynamic_sidebar('sidebar-primary'); ?>
-  <?php else: ?>
-    <div class="sidebar-section">
-      <div class="eyebrow">Tags</div>
-      <div class="tag-cloud" style="margin-top:14px">
-        <?php
-        $tags = get_tags(['number' => 12]);
-        foreach ($tags as $t) {
-            echo '<a href="' . esc_url(get_tag_link($t)) . '" class="tag">#' . esc_html($t->name) . '</a>';
-        }
-        ?>
-      </div>
+  <div class="sidebar-block">
+    <span class="label">Tags</span>
+    <div class="tag-cloud" style="margin-top:var(--s3)">
+      <?php foreach (get_tags(['number' => 15]) as $t): ?>
+        <a href="<?php echo esc_url(get_tag_link($t)); ?>" class="tag">#<?php echo esc_html($t->name); ?></a>
+      <?php endforeach; ?>
     </div>
-
-    <div class="sidebar-section sidebar-archive">
-      <div class="eyebrow">Archive</div>
-      <ul>
-        <?php wp_get_archives(['type' => 'monthly', 'limit' => 6, 'show_post_count' => true]); ?>
-      </ul>
-    </div>
-  <?php endif; ?>
-
-  <div class="sidebar-section">
-    <div class="eyebrow">Sponsored</div>
-    <?php cfn_ad_slot('300x600', 'Half-page'); ?>
   </div>
 </aside>
