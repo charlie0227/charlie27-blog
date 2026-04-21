@@ -4,13 +4,12 @@
 
     <div class="footer-col">
       <div class="site-logo" style="font-size:18px; margin-bottom:var(--s3)">
-        <span class="site-logo__dot"></span><?php bloginfo('name'); ?>
+        charlie<span style="opacity:.35;font-weight:400">/</span>dev
       </div>
       <p style="font-size:13px; line-height:1.65; color:var(--text-2); max-width:300px">
-        <?php echo esc_html(str_replace(['Charlie Chen', 'Charlie Chen'], 'Charlie', get_bloginfo('description'))); ?>
-      </p>
-      <p style="margin-top:var(--s3); font-size:13px; color:var(--text-3); line-height:1.55">
-        A self-motivated developer with high passion in coding technique and a great interest in Web Security.
+        Dev notes on Linux, Docker, and backend systems.
+        Practical guides written from real debugging sessions.
+        Based in Taipei.
       </p>
     </div>
 
@@ -47,8 +46,8 @@
   </div>
 
   <div class="footer-bottom">
-    <span>© <?php echo date('Y'); ?> Charlie · charlie27.com</span>
-    <span>Built with WordPress + Field Notes theme</span>
+    <span>© <?php echo date('Y'); ?> Charlie Chen · charlie27.com · All guides tested in production</span>
+    <span>Built with WordPress · No cookies, just containers</span>
   </div>
 </footer>
 

@@ -12,12 +12,31 @@ $cats  = get_categories(['hide_empty' => true]);
 
 <main style="padding-bottom:var(--s8)">
 
-  <!-- ── Masthead ──────────────────────────────────────────────────── -->
+  <!-- ── Dev hero ──────────────────────────────────────────────────── -->
   <div class="wrap">
-    <div class="masthead">
-      <div class="masthead__left">
-        <h1 class="masthead__title">Dev notes on <em>Linux, Docker &amp; backend.</em></h1>
-        <div class="masthead__tags">
+    <div class="dev-hero">
+      <div class="dev-hero__text">
+        <div class="dev-hero__prompt">charlie@blog:~/posts $ cat README.md</div>
+        <h1 class="dev-hero__title">
+          Dev notes on<br>
+          <em>Linux, Docker</em><br>
+          &amp;&nbsp;backend.
+        </h1>
+        <p class="dev-hero__lede">
+          Practical guides from real debugging sessions. No fluff — just the
+          commands, configs, and architecture decisions that actually ship.
+        </p>
+        <div class="dev-hero__stats">
+          <div>
+            <div class="label">Posts</div>
+            <div class="dev-hero__stat-num"><?php echo $total; ?></div>
+          </div>
+          <div>
+            <div class="label">Topics</div>
+            <div class="dev-hero__stat-num"><?php echo count($cats); ?></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:var(--s3);flex-wrap:wrap">
           <?php foreach ($cats as $c):
             $cls = cfn_category_tag_class($c->slug); ?>
             <a href="<?php echo esc_url(get_category_link($c)); ?>" class="tag <?php echo esc_attr($cls); ?>">
@@ -26,14 +45,35 @@ $cats  = get_categories(['hide_empty' => true]);
           <?php endforeach; ?>
         </div>
       </div>
-      <div class="masthead__right">
-        <span class="masthead__stat"><?php echo $total; ?> <em>articles</em></span>
-        <span class="masthead__stat"><?php echo count($cats); ?> <em>topics</em></span>
+
+      <div class="terminal-window">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <span class="t-dot t-dot--red"></span>
+            <span class="t-dot t-dot--yellow"></span>
+            <span class="t-dot t-dot--green"></span>
+          </div>
+          <span class="terminal-title">zsh — charlie@arch — 82×24</span>
+        </div>
+        <div class="terminal-body">
+          <div class="t-line">
+            <span class="t-prompt">charlie@arch</span><span class="t-sep">:</span><span class="t-path">~/blog</span><span class="t-dollar">$</span> cat latest-posts.txt
+          </div>
+          <?php
+          $preview = new WP_Query(['posts_per_page' => 4]);
+          while ($preview->have_posts()): $preview->the_post(); ?>
+            <div class="t-line t-out">» <?php echo esc_html(wp_trim_words(get_the_title(), 9, '')); ?></div>
+          <?php endwhile; wp_reset_postdata(); ?>
+          <span class="t-blank"></span>
+          <div class="t-line">
+            <span class="t-prompt">charlie@arch</span><span class="t-sep">:</span><span class="t-path">~/blog</span><span class="t-dollar">$</span> <span class="t-cursor"></span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="wrap masthead-rule"><hr class="rule"></div>
+  <div class="wrap" style="padding-bottom:var(--s5)"><hr class="rule"></div>
 
   <!-- ── Main layout ───────────────────────────────────────────────── -->
   <div class="wrap home-layout">
@@ -118,9 +158,15 @@ $cats  = get_categories(['hide_empty' => true]);
       <div class="sidebar-block">
         <span class="label">Topics</span>
         <ul class="sidebar-cats">
-          <?php foreach (get_categories(['hide_empty' => true]) as $c): ?>
+          <?php foreach (get_categories(['hide_empty' => true]) as $c):
+            $tag_key = str_replace(['tag--','tech'], ['','accent'], cfn_category_tag_class($c->slug));
+            $dot_css = "var(--cat-{$tag_key}, var(--accent))";
+          ?>
             <li>
-              <a href="<?php echo esc_url(get_category_link($c)); ?>"><?php echo esc_html($c->name); ?></a>
+              <a href="<?php echo esc_url(get_category_link($c)); ?>" style="display:flex;align-items:center;gap:8px">
+                <span class="sidebar-cat-dot" style="background:<?php echo esc_attr($dot_css); ?>"></span>
+                <?php echo esc_html($c->name); ?>
+              </a>
               <span class="count"><?php echo $c->count; ?></span>
             </li>
           <?php endforeach; ?>

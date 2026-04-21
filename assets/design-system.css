@@ -24,12 +24,14 @@
   --accent-hover: #7E4428;
   --accent-soft: #F1E2D2;
 
-  /* Secondary earth tones */
-  --earth-clay: #B8734A;
-  --earth-olive: #6E6A3E;
-  --earth-moss: #5A6E3F;
-  --earth-sienna: #8B4A2F;
-  --earth-sand: #C9A77F;
+  /* Category palette — 7 hues, tuned for cream base */
+  --cat-linux:      #3D7AB5; --cat-linux-bg:   rgba(61,122,181,.09);  --cat-linux-bd:   rgba(61,122,181,.28);
+  --cat-docker:     #2B8070; --cat-docker-bg:  rgba(43,128,112,.09);  --cat-docker-bd:  rgba(43,128,112,.28);
+  --cat-backend:    #6855A8; --cat-backend-bg: rgba(104,85,168,.09);  --cat-backend-bd: rgba(104,85,168,.28);
+  --cat-devops:     #4A7A38; --cat-devops-bg:  rgba(74,122,56,.09);   --cat-devops-bd:  rgba(74,122,56,.28);
+  --cat-tools:      #B87030; --cat-tools-bg:   rgba(184,112,48,.09);  --cat-tools-bd:   rgba(184,112,48,.28);
+  --cat-news:       #B04030; --cat-news-bg:    rgba(176,64,48,.09);   --cat-news-bd:    rgba(176,64,48,.28);
+  --cat-journal:    #9B4A6B; --cat-journal-bg: rgba(155,74,107,.09);  --cat-journal-bd: rgba(155,74,107,.28);
 
   /* Semantic */
   --bg: var(--cream-100);
@@ -89,6 +91,14 @@
   --accent: #8DB195;
   --accent-hover: #A8C4AE;
   --accent-soft: #1E2A22;
+
+  --cat-linux:      #5A9BD5; --cat-linux-bg:   rgba(90,155,213,.12);  --cat-linux-bd:   rgba(90,155,213,.30);
+  --cat-docker:     #3DB090; --cat-docker-bg:  rgba(61,176,144,.12);  --cat-docker-bd:  rgba(61,176,144,.30);
+  --cat-backend:    #8875C8; --cat-backend-bg: rgba(136,117,200,.12); --cat-backend-bd: rgba(136,117,200,.30);
+  --cat-devops:     #5A9A48; --cat-devops-bg:  rgba(90,154,72,.12);   --cat-devops-bd:  rgba(90,154,72,.30);
+  --cat-tools:      #D89050; --cat-tools-bg:   rgba(216,144,80,.12);  --cat-tools-bd:   rgba(216,144,80,.30);
+  --cat-news:       #D06050; --cat-news-bg:    rgba(208,96,80,.12);   --cat-news-bd:    rgba(208,96,80,.30);
+  --cat-journal:    #BB6A8B; --cat-journal-bg: rgba(187,106,139,.12); --cat-journal-bd: rgba(187,106,139,.30);
 }
 
 /* Reset */
@@ -268,10 +278,14 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; c
   border-radius: 2px;
   background: var(--bg-elevated);
 }
-.tag--accent { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
-.tag--tech { color: var(--accent); border-color: var(--accent); }
-.tag--travel { color: #8B5A2B; border-color: #C9A77F; background: #F7EFE1; }
-[data-theme="dark"] .tag--travel { background: #2A1F10; border-color: #5A4628; color: #C9A77F; }
+.tag--accent   { color: var(--accent);       border-color: var(--accent);         background: var(--accent-soft); }
+.tag--linux    { color: var(--cat-linux);   border-color: var(--cat-linux-bd);   background: var(--cat-linux-bg);   }
+.tag--docker   { color: var(--cat-docker);  border-color: var(--cat-docker-bd);  background: var(--cat-docker-bg);  }
+.tag--backend  { color: var(--cat-backend); border-color: var(--cat-backend-bd); background: var(--cat-backend-bg); }
+.tag--devops   { color: var(--cat-devops);  border-color: var(--cat-devops-bd);  background: var(--cat-devops-bg);  }
+.tag--tools    { color: var(--cat-tools);   border-color: var(--cat-tools-bd);   background: var(--cat-tools-bg);   }
+.tag--news     { color: var(--cat-news);    border-color: var(--cat-news-bd);    background: var(--cat-news-bg);    }
+.tag--journal  { color: var(--cat-journal); border-color: var(--cat-journal-bd); background: var(--cat-journal-bg); }
 
 /* Card */
 .card {
@@ -324,6 +338,13 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; c
   background: linear-gradient(160deg, #e8d5b9 0%, #b8895a 100%);
   color: rgba(255,255,255,0.7);
 }
+.img-placeholder--linux   { background: linear-gradient(160deg, #2c4a78 0%, #1a2e52 100%); color: rgba(255,255,255,0.5); }
+.img-placeholder--docker  { background: linear-gradient(160deg, #1e5c52 0%, #0d3830 100%); color: rgba(255,255,255,0.5); }
+.img-placeholder--backend { background: linear-gradient(160deg, #3c2878 0%, #22185a 100%); color: rgba(255,255,255,0.5); }
+.img-placeholder--devops  { background: linear-gradient(160deg, #2a4a20 0%, #182e10 100%); color: rgba(255,255,255,0.5); }
+.img-placeholder--tools   { background: linear-gradient(160deg, #6a4020 0%, #3a2010 100%); color: rgba(255,255,255,0.5); }
+.img-placeholder--news    { background: linear-gradient(160deg, #6a2818 0%, #3a1208 100%); color: rgba(255,255,255,0.5); }
+.img-placeholder--journal { background: linear-gradient(160deg, #5a2848 0%, #38122a 100%); color: rgba(255,255,255,0.5); }
 
 /* Ad slot */
 .ad-slot {

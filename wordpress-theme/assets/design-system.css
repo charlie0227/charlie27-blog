@@ -13,6 +13,15 @@
   --accent-dim: #7E4428;
   --accent-bg:  #F3E6DC;
 
+  /* Category palette — 7 hues, cream-adjusted */
+  --cat-linux:      #3D7AB5; --cat-linux-bg:   rgba(61,122,181,.09);  --cat-linux-bd:   rgba(61,122,181,.28);
+  --cat-docker:     #2B8070; --cat-docker-bg:  rgba(43,128,112,.09);  --cat-docker-bd:  rgba(43,128,112,.28);
+  --cat-backend:    #6855A8; --cat-backend-bg: rgba(104,85,168,.09);  --cat-backend-bd: rgba(104,85,168,.28);
+  --cat-devops:     #4A7A38; --cat-devops-bg:  rgba(74,122,56,.09);   --cat-devops-bd:  rgba(74,122,56,.28);
+  --cat-tools:      #B87030; --cat-tools-bg:   rgba(184,112,48,.09);  --cat-tools-bd:   rgba(184,112,48,.28);
+  --cat-news:       #B04030; --cat-news-bg:    rgba(176,64,48,.09);   --cat-news-bd:    rgba(176,64,48,.28);
+  --cat-journal:    #9B4A6B; --cat-journal-bg: rgba(155,74,107,.09);  --cat-journal-bd: rgba(155,74,107,.28);
+
   --bg:         var(--cream);
   --bg-raise:   #FBF7F0;
   --bg-sink:    var(--cream-mid);
@@ -51,6 +60,14 @@
   --accent:    #8DB195;
   --accent-dim:#70967A;
   --accent-bg: #1A2A1E;
+
+  --cat-linux:      #5A9BD5; --cat-linux-bg:   rgba(90,155,213,.12);  --cat-linux-bd:   rgba(90,155,213,.30);
+  --cat-docker:     #3DB090; --cat-docker-bg:  rgba(61,176,144,.12);  --cat-docker-bd:  rgba(61,176,144,.30);
+  --cat-backend:    #8875C8; --cat-backend-bg: rgba(136,117,200,.12); --cat-backend-bd: rgba(136,117,200,.30);
+  --cat-devops:     #5A9A48; --cat-devops-bg:  rgba(90,154,72,.12);   --cat-devops-bd:  rgba(90,154,72,.30);
+  --cat-tools:      #D89050; --cat-tools-bg:   rgba(216,144,80,.12);  --cat-tools-bd:   rgba(216,144,80,.30);
+  --cat-news:       #D06050; --cat-news-bg:    rgba(208,96,80,.12);   --cat-news-bd:    rgba(208,96,80,.30);
+  --cat-journal:    #BB6A8B; --cat-journal-bg: rgba(187,106,139,.12); --cat-journal-bd: rgba(187,106,139,.30);
 }
 
 /* ─── Reset ───────────────────────────────────────────────────────── */
@@ -199,24 +216,14 @@ button,input,select,textarea { font:inherit; }
 }
 .tag:hover { border-color:var(--border-hi); color:var(--text-2); }
 
-.tag--linux  { color:#5A6E3F; border-color:#8AAA5A; background:#EFF5E8; }
-.tag--docker { color:#2A6090; border-color:#6AAACE; background:#E5F2FA; }
-.tag--js     { color:#7A6200; border-color:#C8A800; background:#FDF8DC; }
-.tag--python { color:#2A6656; border-color:#56A495; background:#E5F3F0; }
-.tag--cpp    { color:#5A3AA0; border-color:#9470D8; background:#F0EAF8; }
-.tag--db     { color:#2A4A88; border-color:#6A8EC8; background:#E5EEF8; }
-.tag--ops    { color:#6A4A1C; border-color:#B08048; background:#F8F0E4; }
-.tag--news   { color:#8B2252; border-color:#C45A8A; background:#FAE8F2; }
-.tag--tech   { color:var(--accent); border-color:var(--accent); background:var(--accent-bg); }
-
-[data-theme="dark"] .tag--linux  { color:#90BE68; border-color:#4A6830; background:#141E0A; }
-[data-theme="dark"] .tag--docker { color:#78B8E0; border-color:#285878; background:#0A1820; }
-[data-theme="dark"] .tag--js     { color:#D4B820; border-color:#786800; background:#201A00; }
-[data-theme="dark"] .tag--python { color:#68C0A8; border-color:#286858; background:#0A1E18; }
-[data-theme="dark"] .tag--cpp    { color:#B098E8; border-color:#583888; background:#140A28; }
-[data-theme="dark"] .tag--db     { color:#88B0E0; border-color:#284870; background:#0A1428; }
-[data-theme="dark"] .tag--ops    { color:#C09060; border-color:#684820; background:#201008; }
-[data-theme="dark"] .tag--news   { color:#E080B0; border-color:#702050; background:#280818; }
+.tag--linux    { color:var(--cat-linux);   border-color:var(--cat-linux-bd);   background:var(--cat-linux-bg);   }
+.tag--docker   { color:var(--cat-docker);  border-color:var(--cat-docker-bd);  background:var(--cat-docker-bg);  }
+.tag--backend  { color:var(--cat-backend); border-color:var(--cat-backend-bd); background:var(--cat-backend-bg); }
+.tag--devops   { color:var(--cat-devops);  border-color:var(--cat-devops-bd);  background:var(--cat-devops-bg);  }
+.tag--tools    { color:var(--cat-tools);   border-color:var(--cat-tools-bd);   background:var(--cat-tools-bg);   }
+.tag--news     { color:var(--cat-news);    border-color:var(--cat-news-bd);    background:var(--cat-news-bg);    }
+.tag--journal  { color:var(--cat-journal); border-color:var(--cat-journal-bd); background:var(--cat-journal-bg); }
+.tag--tech     { color:var(--accent);      border-color:var(--accent);         background:var(--accent-bg);      }
 
 /* ─── Buttons ─────────────────────────────────────────────────────── */
 .btn {

@@ -14,19 +14,24 @@
 
     <!-- Logo -->
     <a href="<?php echo esc_url(home_url('/')); ?>" class="site-logo">
-      <span class="site-logo__dot"></span>
-      <?php bloginfo('name'); ?>
+      charlie<span style="opacity:.35;font-weight:400">/</span>dev
     </a>
 
     <!-- Category nav -->
     <nav class="site-nav" aria-label="Categories">
       <?php
-      $nav_cats = get_categories(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC', 'number' => 8]);
+      $nav_cats = get_categories(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC', 'number' => 6]);
       foreach ($nav_cats as $c):
-        $active = (is_category($c->term_id)) ? ' is-active' : '';
+        $active   = (is_category($c->term_id)) ? ' is-active' : '';
+        $tag_key  = str_replace(['tag--', 'tech'], ['', 'accent'], cfn_category_tag_class($c->slug));
+        $dot_color = "var(--cat-{$tag_key}, var(--accent))";
       ?>
         <a href="<?php echo esc_url(get_category_link($c)); ?>"
            class="site-nav__link<?php echo $active; ?>">
+          <span style="display:inline-block;width:6px;height:6px;border-radius:50%;
+                       background:<?php echo esc_attr($dot_color); ?>;
+                       margin-right:5px;vertical-align:1px;
+                       opacity:<?php echo $active ? '1' : '.5'; ?>"></span>
           <?php echo esc_html($c->name); ?>
         </a>
       <?php endforeach; ?>

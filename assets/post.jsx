@@ -3,12 +3,12 @@
 const { useState, useEffect, useRef } = React;
 
 const SECTIONS = [
-  { id: 'opening', label: 'The opening question' },
-  { id: 'small-tools', label: 'On small tools' },
-  { id: 'return', label: 'Why we return' },
-  { id: 'quiet-software', label: 'The quiet software thesis' },
-  { id: 'practice', label: 'A working practice' },
-  { id: 'closing', label: 'Closing, a small one' },
+  { id: 'why',       label: 'Why image size matters'         },
+  { id: 'anatomy',   label: 'Anatomy of a multi-stage build' },
+  { id: 'node',      label: 'Example: Node.js service'       },
+  { id: 'go',        label: 'Example: Go binary'             },
+  { id: 'patterns',  label: 'Patterns & gotchas'             },
+  { id: 'results',   label: 'Real numbers from prod'         },
 ];
 
 function PostTOC() {
@@ -88,22 +88,22 @@ function PostPage() {
         <div className="container">
           <header className="post-header">
             <div className="flex items-center gap-3" style={{marginBottom:8}}>
-              <a href="category.html?c=tech" className="tag tag--accent">Tech</a>
-              <span className="eyebrow">Essay № 047 · April 18, 2026</span>
+              <a href="category.html?c=docker" className="tag tag--docker">Docker</a>
+              <span className="eyebrow">Guide № 047 · April 18, 2026</span>
             </div>
             <h1 className="post-title">
-              On building <em>quiet</em> software in an age of noise.
+              Docker multi-stage builds: cut your image size by <em>80%</em>
             </h1>
             <p style={{fontSize:20, lineHeight:1.55, color:'var(--text-muted)', maxWidth:720, fontFamily:'var(--font-serif)', fontStyle:'italic'}}>
-              A meditation on the tools we return to — why some endure and others burn bright, briefly.
-              Notes from three years of writing less, and shipping more.
+              Stop shipping your compiler to production. A step-by-step guide to multi-stage
+              Dockerfiles with real numbers from three production services.
             </p>
             <div className="post-header-meta">
               <div className="post-author">
                 <div className="post-author__avatar">C</div>
                 <div className="post-author__info">
                   <span className="post-author__name">Charlie Chen</span>
-                  <span className="post-author__role">Writer · based in Taipei</span>
+                  <span className="post-author__role">Backend engineer · Taipei</span>
                 </div>
               </div>
               <span className="post-meta" style={{marginLeft:'auto'}}>
@@ -115,9 +115,9 @@ function PostPage() {
           </header>
 
           <div className="post-hero">
-            <div className="img-placeholder img-placeholder--forest">Hero photograph · 16:8</div>
+            <div className="img-placeholder img-placeholder--docker">Docker · Multi-stage build diagram · 16:8</div>
             <div className="figure-caption" style={{textAlign:'left', marginLeft:4}}>
-              A writing desk in Aomori, late winter 2026 — photograph by the author
+              Before and after: a 1.2 GB Node image collapsed to 94 MB using multi-stage builds
             </div>
           </div>
 
@@ -126,122 +126,170 @@ function PostPage() {
 
             <div className="post-body">
               <p className="lede">
-                There&rsquo;s a quality certain tools have that I&rsquo;ve stopped trying to describe and started
-                trying to build: they feel <em>quiet</em>. They don&rsquo;t demand. They don&rsquo;t pulse or
-                pop or ping. They sit, like good notebooks, waiting for you.
+                A 1.2 GB Node image. A 94 MB Node image. Same app, same dependencies,
+                same behaviour in production. The difference is one Dockerfile pattern
+                that almost nobody uses — until they see the CI push times.
               </p>
 
-              <h2 id="opening">The opening question</h2>
+              <h2 id="why">Why image size matters</h2>
               <p>
-                Somewhere around year eight of working in software, I started keeping a short list of
-                tools I opened every day without thinking — and a much longer list of the ones I had
-                tried and abandoned. The short list stayed surprisingly stable: a text editor, a terminal,
-                a notebook app written by a stranger in Copenhagen, a mapping app I paid for once.
+                Large images cost you in three places: push/pull time on every deploy,
+                cold-start latency on container schedulers, and attack surface for CVEs
+                in packages you never actually run. Build tools, compilers, and dev
+                dependencies have no business being in a production image.
               </p>
               <p>
-                The long list grew, monthly, with the velocity of the industry. Most of them were good
-                software. Many of them were well-funded. A few were, in the technical sense, better than
-                the tools on my short list. But they didn&rsquo;t last — <a href="#">not for me</a>, and
-                not for most of the people I know who pay close attention to what they use.
+                The naive fix is a long <code>.dockerignore</code> and some manual
+                <code>RUN rm -rf</code> calls. Multi-stage builds are the real answer — they
+                let Docker&rsquo;s own layer mechanism do the work.
               </p>
 
               <blockquote>
-                The question that started haunting me: what is the <em>quality</em> that makes software
-                durable in a life, and why do we so rarely build for it?
-                <cite>— Notebook, February 2026</cite>
+                The rule: build in one stage, copy only the artifact into the next.
+                The compiler never touches prod.
+                <cite>— Docker best practices, 2026</cite>
               </blockquote>
 
-              <h2 id="small-tools">On small tools</h2>
+              <h2 id="anatomy">Anatomy of a multi-stage build</h2>
               <p>
-                The first instinct is to say: size. Small software is durable because small software
-                respects you. But this isn&rsquo;t quite right. Some of my longest-used tools are not
-                small. The text editor I&rsquo;m writing this in has a feature list that would fill a
-                booklet. What it <em>has</em> is the opposite of aggression.
+                Each <code>FROM</code> instruction starts a new stage. You name stages with
+                <code>AS</code>, and copy files between them with <code>COPY --from</code>.
+                Only the final stage becomes the image you ship.
               </p>
 
+              <CodeBlock lang="dockerfile" filename="Dockerfile">
+{`# Stage 1: build
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+# Stage 2: production runtime
+FROM node:20-alpine AS runtime
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+EXPOSE 3000
+CMD ["node", "dist/server.js"]`}
+              </CodeBlock>
+
+              <p>
+                The <code>builder</code> stage includes the full npm dependency tree, TypeScript
+                compiler, and source files. None of that lands in <code>runtime</code> — only
+                the compiled output and production <code>node_modules</code>.
+              </p>
+
+              <h2 id="node">Example: Node.js service</h2>
+              <p>
+                Here&rsquo;s the pattern I use for a typical Express + TypeScript API. The key
+                insight is separating <code>devDependencies</code> from production deps before
+                the copy step:
+              </p>
+
+              <CodeBlock lang="dockerfile" filename="Dockerfile.prod">
+{`FROM node:20-alpine AS deps
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --omit=dev
+
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY tsconfig.json .
+COPY src ./src
+RUN npx tsc --outDir dist
+
+FROM node:20-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=deps    /app/node_modules ./node_modules
+COPY --from=builder /app/dist         ./dist
+USER node
+EXPOSE 3000
+CMD ["node", "dist/index.js"]`}
+              </CodeBlock>
+
               <div className="figure">
-                <div className="img-placeholder img-placeholder--cream" style={{aspectRatio:'16/9'}}>
-                  Diagram · The quiet software quadrant
+                <div className="img-placeholder img-placeholder--docker" style={{aspectRatio:'16/9'}}>
+                  Diagram · Three-stage build pipeline
                 </div>
                 <div className="figure-caption">
-                  Fig. 1 — Mapping software on two axes: how much it asks of you, and how much it gives back.
+                  Fig. 1 — The <code>deps</code> and <code>builder</code> stages run in parallel on BuildKit. Only <code>runner</code> ships.
                 </div>
               </div>
 
+              <h2 id="go">Example: Go binary</h2>
               <p>
-                Small software, done right, has a particular cadence. It opens in under half a second.
-                It does the thing you came to do without asking you to pick a plan first. It doesn&rsquo;t
-                show you other people&rsquo;s activity unless you ask. It doesn&rsquo;t try to teach you
-                to use it — trusting, perhaps too generously, that you figured out a can opener without a
-                tutorial.
+                Go is the dream case for multi-stage builds. The final image can be
+                <code>scratch</code> — literally nothing but your statically compiled binary:
               </p>
 
-              <h3>A partial list of things quiet software doesn&rsquo;t do</h3>
+              <CodeBlock lang="dockerfile" filename="Dockerfile">
+{`FROM golang:1.22-alpine AS builder
+WORKDIR /app
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o server .
+
+FROM scratch
+COPY --from=builder /app/server /server
+EXPOSE 8080
+ENTRYPOINT ["/server"]`}
+              </CodeBlock>
+
+              <p>
+                Result: a 12 MB image from a 700 MB build environment. <code>-ldflags="-s -w"</code>
+                strips debug symbols and DWARF info — safe for production, saves another 30%.
+              </p>
+
+              <h2 id="patterns">Patterns &amp; gotchas</h2>
+
+              <h3>Use BuildKit cache mounts for package managers</h3>
+              <CodeBlock lang="dockerfile">
+{`# Cache npm downloads across builds
+RUN --mount=type=cache,target=/root/.npm \
+    npm ci --prefer-offline`}
+              </CodeBlock>
+
+              <h3>Things that catch people out</h3>
               <ul>
-                <li>Announce updates in the middle of your work.</li>
-                <li>Show you a &ldquo;what&rsquo;s new&rdquo; modal on every second launch.</li>
-                <li>Replace the word &ldquo;save&rdquo; with something cleverer.</li>
-                <li>Gamify the act of using it.</li>
-                <li>Treat the empty state as a sales opportunity.</li>
+                <li>Copying <code>.env</code> files into the builder stage — they get baked into layers.</li>
+                <li>Forgetting <code>--chown</code> on COPY when running as non-root in the final stage.</li>
+                <li>Using <code>COPY . .</code> before <code>RUN npm ci</code> — busts the cache on every code change.</li>
+                <li>Not setting <code>NODE_ENV=production</code> — skips some runtime optimisations.</li>
               </ul>
 
-              <h2 id="return">Why we return</h2>
+              <h2 id="results">Real numbers from prod</h2>
               <p>
-                I&rsquo;ve started to think the durable tools share something like what Alexander called
-                <em> the quality without a name</em> — a kind of fit between the thing and the life it
-                lives inside. You don&rsquo;t choose these tools so much as stop noticing them. They stop
-                being software and start being <em>habits</em>.
+                After migrating three services at my last job:
               </p>
+              <ul>
+                <li><strong>API service (Node/TS):</strong> 1.24 GB → 148 MB (88% reduction)</li>
+                <li><strong>Worker service (Go):</strong> 712 MB → 14 MB (98% reduction)</li>
+                <li><strong>Next.js frontend:</strong> 2.1 GB → 310 MB (85% reduction)</li>
+              </ul>
               <p>
-                Which is, I think, the highest compliment you can pay a piece of software, and one almost
-                nobody ships toward.
-              </p>
-
-              <h2 id="quiet-software">The quiet software thesis</h2>
-              <p>
-                So here&rsquo;s the thesis, stated plainly: the next decade of genuinely useful software
-                will look less like a product and more like an <em>instrument</em>. Instruments don&rsquo;t
-                onboard you. They don&rsquo;t push notifications at you. They&rsquo;re patient, and
-                durable, and — this is the important part — they get out of the way.
-              </p>
-
-              <pre><code>{`// What quiet software feels like, as a shape:
-function openApp() {
-  load();           // fast
-  restoreState();   // exactly where you left off
-  showWork();       // not a dashboard. the work.
-  stopTalking();    // let them work.
-}`}</code></pre>
-
-              <h2 id="practice">A working practice</h2>
-              <p>
-                I&rsquo;ve been keeping two lists while designing my own small tools. One is of moments
-                where the software should have said nothing, and said something anyway. The other is of
-                moments where the software noticed something I would have missed, and quietly waited for me
-                to catch up.
-              </p>
-              <p>
-                The second list is much, much shorter. That&rsquo;s what we&rsquo;re working toward.
+                Deployment push times dropped from ~4 minutes to under 40 seconds on a
+                standard CI runner. Cold starts on the scheduler went from 8s to under 2s.
               </p>
 
               <hr />
 
-              <h2 id="closing">Closing, a small one</h2>
               <p>
-                A friend sent me a line once, from a book I still haven&rsquo;t read: <em>the things that
-                last are the things that don&rsquo;t insist on themselves.</em> I think about this a lot,
-                while working, and while traveling, and while trying to decide whether to ship a thing or
-                let it sit for another week.
-              </p>
-              <p>
-                The tools that last don&rsquo;t insist on themselves.<br/>
-                We&rsquo;re allowed to build software that way.
+                The pattern is worth the extra 10 lines of Dockerfile every time.
+                Once you see a 94 MB image where a 1.2 GB one used to live, you
+                don&rsquo;t go back.
               </p>
 
               <div className="post-end">
-                <div className="eyebrow" style={{marginBottom:16}}>End of essay № 047</div>
+                <div className="eyebrow" style={{marginBottom:16}}>End of guide № 047</div>
                 <div style={{display:'flex', gap:12, marginBottom:24}}>
-                  <button className="btn btn--accent"><Icon.Heart /> Appreciate (312)</button>
+                  <button className="btn btn--accent"><Icon.Heart /> Helpful (312)</button>
                   <button className="btn btn--ghost"><Icon.Share /> Share</button>
                   <button className="btn btn--ghost"><Icon.Bookmark /> Save</button>
                 </div>

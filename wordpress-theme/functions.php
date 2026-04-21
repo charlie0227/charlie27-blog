@@ -177,22 +177,56 @@ add_filter('excerpt_more', 'cfn_excerpt_more');
  * ------------------------------------------------------------------------- */
 function cfn_category_tag_class($slug) {
     $map = [
-        'linux'        => 'tag--linux',
-        'bash'         => 'tag--linux',
-        'containerize' => 'tag--docker',
-        'docker'       => 'tag--docker',
-        'javascript'   => 'tag--js',
-        'python'       => 'tag--python',
-        'c'            => 'tag--cpp',
-        'cpp'          => 'tag--cpp',
-        'c-2'          => 'tag--cpp',
-        'databases'    => 'tag--db',
-        'git'          => 'tag--ops',
-        'windows'      => 'tag--ops',
-        'wordpress'    => 'tag--ops',
-        'daily-news'   => 'tag--news',
+        // Linux
+        'linux'          => 'tag--linux',
+        'bash'           => 'tag--linux',
+        'shell'          => 'tag--linux',
+        'kernel'         => 'tag--linux',
+        'systemd'        => 'tag--linux',
+        // Docker
+        'docker'         => 'tag--docker',
+        'containerize'   => 'tag--docker',
+        'containers'     => 'tag--docker',
+        'kubernetes'     => 'tag--docker',
+        'k8s'            => 'tag--docker',
+        // Backend
+        'backend'        => 'tag--backend',
+        'api'            => 'tag--backend',
+        'databases'      => 'tag--backend',
+        'python'         => 'tag--backend',
+        'go'             => 'tag--backend',
+        'rust'           => 'tag--backend',
+        'javascript'     => 'tag--backend',
+        'node'           => 'tag--backend',
+        // DevOps
+        'devops'         => 'tag--devops',
+        'git'            => 'tag--devops',
+        'ci-cd'          => 'tag--devops',
+        'github-actions' => 'tag--devops',
+        'nginx'          => 'tag--devops',
+        'monitoring'     => 'tag--devops',
+        // Tools
+        'tools'          => 'tag--tools',
+        'vim'            => 'tag--tools',
+        'terminal'       => 'tag--tools',
+        'windows'        => 'tag--tools',
+        'wordpress'      => 'tag--tools',
+        // Daily News
+        'daily-news'     => 'tag--news',
+        'news'           => 'tag--news',
+        // Journal
+        'journal'        => 'tag--journal',
+        'thoughts'       => 'tag--journal',
     ];
     return $map[$slug] ?? 'tag--tech';
+}
+
+/* Category slug → CSS custom property color */
+function cfn_category_css_color($slug) {
+    $class = cfn_category_tag_class($slug);
+    $key = str_replace('tag--', '', $class);
+    if ($key === 'tech') $key = 'accent';
+    return "var(--cat-{$key}, var(--accent))";
 }
 
 /* -------------------------------------------------------------------------
