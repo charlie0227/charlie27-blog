@@ -14,13 +14,13 @@
   --accent-bg:  #F3E6DC;
 
   /* Category palette — 7 hues, cream-adjusted */
-  --cat-linux:      #3D7AB5; --cat-linux-bg:   rgba(61,122,181,.09);  --cat-linux-bd:   rgba(61,122,181,.28);
-  --cat-docker:     #2B8070; --cat-docker-bg:  rgba(43,128,112,.09);  --cat-docker-bd:  rgba(43,128,112,.28);
-  --cat-backend:    #6855A8; --cat-backend-bg: rgba(104,85,168,.09);  --cat-backend-bd: rgba(104,85,168,.28);
-  --cat-devops:     #4A7A38; --cat-devops-bg:  rgba(74,122,56,.09);   --cat-devops-bd:  rgba(74,122,56,.28);
-  --cat-tools:      #B87030; --cat-tools-bg:   rgba(184,112,48,.09);  --cat-tools-bd:   rgba(184,112,48,.28);
-  --cat-news:       #B04030; --cat-news-bg:    rgba(176,64,48,.09);   --cat-news-bd:    rgba(176,64,48,.28);
-  --cat-journal:    #9B4A6B; --cat-journal-bg: rgba(155,74,107,.09);  --cat-journal-bd: rgba(155,74,107,.28);
+  --cat-linux:      #3D7AB5; --cat-linux-bg:   rgba(61,122,181,.13);  --cat-linux-bd:   rgba(61,122,181,.38);
+  --cat-docker:     #2B8070; --cat-docker-bg:  rgba(43,128,112,.13);  --cat-docker-bd:  rgba(43,128,112,.38);
+  --cat-backend:    #6855A8; --cat-backend-bg: rgba(104,85,168,.13);  --cat-backend-bd: rgba(104,85,168,.38);
+  --cat-devops:     #4A7A38; --cat-devops-bg:  rgba(74,122,56,.13);   --cat-devops-bd:  rgba(74,122,56,.38);
+  --cat-tools:      #B87030; --cat-tools-bg:   rgba(184,112,48,.13);  --cat-tools-bd:   rgba(184,112,48,.38);
+  --cat-news:       #B04030; --cat-news-bg:    rgba(176,64,48,.13);   --cat-news-bd:    rgba(176,64,48,.38);
+  --cat-journal:    #9B4A6B; --cat-journal-bg: rgba(155,74,107,.13);  --cat-journal-bd: rgba(155,74,107,.38);
 
   --bg:         var(--cream);
   --bg-raise:   #FBF7F0;
@@ -216,14 +216,14 @@ button,input,select,textarea { font:inherit; }
 }
 .tag:hover { border-color:var(--border-hi); color:var(--text-2); }
 
-.tag--linux    { color:var(--cat-linux);   border-color:var(--cat-linux-bd);   background:var(--cat-linux-bg);   }
-.tag--docker   { color:var(--cat-docker);  border-color:var(--cat-docker-bd);  background:var(--cat-docker-bg);  }
-.tag--backend  { color:var(--cat-backend); border-color:var(--cat-backend-bd); background:var(--cat-backend-bg); }
-.tag--devops   { color:var(--cat-devops);  border-color:var(--cat-devops-bd);  background:var(--cat-devops-bg);  }
-.tag--tools    { color:var(--cat-tools);   border-color:var(--cat-tools-bd);   background:var(--cat-tools-bg);   }
-.tag--news     { color:var(--cat-news);    border-color:var(--cat-news-bd);    background:var(--cat-news-bg);    }
-.tag--journal  { color:var(--cat-journal); border-color:var(--cat-journal-bd); background:var(--cat-journal-bg); }
-.tag--tech     { color:var(--accent);      border-color:var(--accent);         background:var(--accent-bg);      }
+.tag--linux    { color:var(--cat-linux);   border-color:var(--cat-linux-bd);   background:var(--cat-linux-bg);   font-weight:500; }
+.tag--docker   { color:var(--cat-docker);  border-color:var(--cat-docker-bd);  background:var(--cat-docker-bg);  font-weight:500; }
+.tag--backend  { color:var(--cat-backend); border-color:var(--cat-backend-bd); background:var(--cat-backend-bg); font-weight:500; }
+.tag--devops   { color:var(--cat-devops);  border-color:var(--cat-devops-bd);  background:var(--cat-devops-bg);  font-weight:500; }
+.tag--tools    { color:var(--cat-tools);   border-color:var(--cat-tools-bd);   background:var(--cat-tools-bg);   font-weight:500; }
+.tag--news     { color:var(--cat-news);    border-color:var(--cat-news-bd);    background:var(--cat-news-bg);    font-weight:500; }
+.tag--journal  { color:var(--cat-journal); border-color:var(--cat-journal-bd); background:var(--cat-journal-bg); font-weight:500; }
+.tag--tech     { color:var(--accent);      border-color:var(--accent);         background:var(--accent-bg);      font-weight:500; }
 
 /* ─── Buttons ─────────────────────────────────────────────────────── */
 .btn {

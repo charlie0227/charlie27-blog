@@ -258,8 +258,7 @@ function PostCard({ post, variant = "default" }) {
   // default = vertical card
   return (
     <a href="post.html" className="post-card"
-       style={{borderLeft: `2px solid ${catColor(post.cat)}`, paddingLeft:16, borderRadius:0,
-               background:'transparent', border:'none', borderLeft:`2px solid ${catColor(post.cat)}`}}>
+       style={{borderTop:`3px solid ${catColor(post.cat)}`, paddingTop:16}}>
       <div className={`img-placeholder img-placeholder--${tone}`}
            style={{aspectRatio:'16/9', borderRadius:4, marginBottom:16}}>
         {post.imgLabel || 'Image'}

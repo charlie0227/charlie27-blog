@@ -211,13 +211,12 @@ function LatestGrid({ posts }) {
             <button
               key={c}
               onClick={() => setActive(c)}
-              className={`tag ${c === 'All' ? (active === 'All' ? 'tag--accent' : '') : catClass(c)}`}
+              className={`tag ${c === 'All' ? 'tag--accent' : catClass(c)}`}
               style={{
                 cursor:'pointer',
-                opacity: active === c ? 1 : 0.5,
-                border: active === c ? undefined : '1px solid var(--border)',
-                color: active === c ? undefined : 'var(--text-muted)',
-                background: active === c ? undefined : 'transparent',
+                opacity: active === c ? 1 : 0.45,
+                fontWeight: active === c ? 600 : 400,
+                transition:'opacity 160ms,font-weight 160ms',
               }}>
               {c}
             </button>
