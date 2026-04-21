@@ -177,48 +177,61 @@ add_filter('excerpt_more', 'cfn_excerpt_more');
  * ------------------------------------------------------------------------- */
 function cfn_category_tag_class($slug) {
     $map = [
-        // Linux
-        'linux'          => 'tag--linux',
-        'bash'           => 'tag--linux',
-        'shell'          => 'tag--linux',
-        'kernel'         => 'tag--linux',
-        'systemd'        => 'tag--linux',
-        // Docker
-        'docker'         => 'tag--docker',
-        'containerize'   => 'tag--docker',
-        'containers'     => 'tag--docker',
-        'kubernetes'     => 'tag--docker',
-        'k8s'            => 'tag--docker',
-        // Backend
+        // 前端前線
+        '前端前線'       => 'tag--frontend',
+        'frontend'       => 'tag--frontend',
+        'front-end'      => 'tag--frontend',
+        'javascript'     => 'tag--frontend',
+        'react'          => 'tag--frontend',
+        'vue'            => 'tag--frontend',
+        'css'            => 'tag--frontend',
+        // 工程趣聞
+        '工程趣聞'       => 'tag--engineering',
+        'engineering'    => 'tag--engineering',
+        'tools'          => 'tag--engineering',
+        'vim'            => 'tag--engineering',
+        'terminal'       => 'tag--engineering',
+        'bash'           => 'tag--engineering',
+        // 平台與維運
+        '平台與維運'     => 'tag--platform',
+        'platform'       => 'tag--platform',
+        'devops'         => 'tag--platform',
+        'docker'         => 'tag--platform',
+        'kubernetes'     => 'tag--platform',
+        'k8s'            => 'tag--platform',
+        'linux'          => 'tag--platform',
+        'nginx'          => 'tag--platform',
+        'ci-cd'          => 'tag--platform',
+        'github-actions' => 'tag--platform',
+        // 後端工坊
+        '後端工坊'       => 'tag--backend',
         'backend'        => 'tag--backend',
+        'back-end'       => 'tag--backend',
         'api'            => 'tag--backend',
-        'databases'      => 'tag--backend',
         'python'         => 'tag--backend',
         'go'             => 'tag--backend',
         'rust'           => 'tag--backend',
-        'javascript'     => 'tag--backend',
         'node'           => 'tag--backend',
-        // DevOps
-        'devops'         => 'tag--devops',
-        'git'            => 'tag--devops',
-        'ci-cd'          => 'tag--devops',
-        'github-actions' => 'tag--devops',
-        'nginx'          => 'tag--devops',
-        'monitoring'     => 'tag--devops',
-        // Tools
-        'tools'          => 'tag--tools',
-        'vim'            => 'tag--tools',
-        'terminal'       => 'tag--tools',
-        'windows'        => 'tag--tools',
-        'wordpress'      => 'tag--tools',
-        // Daily News
-        'daily-news'     => 'tag--news',
-        'news'           => 'tag--news',
-        // Journal
-        'journal'        => 'tag--journal',
-        'thoughts'       => 'tag--journal',
+        // 產業脈動
+        '產業脈動'       => 'tag--industry',
+        'industry'       => 'tag--industry',
+        'news'           => 'tag--industry',
+        'daily-news'     => 'tag--industry',
+        // 資安雷達
+        '資安雷達'       => 'tag--security',
+        'security'       => 'tag--security',
+        'infosec'        => 'tag--security',
+        'ctf'            => 'tag--security',
+        // 資料與儲存
+        '資料與儲存'     => 'tag--data',
+        'data'           => 'tag--data',
+        'database'       => 'tag--data',
+        'databases'      => 'tag--data',
+        'storage'        => 'tag--data',
+        'postgres'       => 'tag--data',
+        'redis'          => 'tag--data',
     ];
-    return $map[$slug] ?? 'tag--tech';
+    return $map[$slug] ?? $map[urldecode($slug)] ?? 'tag--tech';
 }
 
 /* Category slug → CSS custom property color */

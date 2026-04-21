@@ -20,7 +20,7 @@
     <!-- Category nav -->
     <nav class="site-nav" aria-label="Categories">
       <?php
-      $nav_cats = get_categories(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC', 'number' => 6]);
+      $nav_cats = get_categories(['hide_empty' => false, 'orderby' => 'name', 'order' => 'ASC', 'number' => 7]);
       foreach ($nav_cats as $c):
         $active   = (is_category($c->term_id)) ? ' is-active' : '';
         $tag_key  = str_replace(['tag--', 'tech'], ['', 'accent'], cfn_category_tag_class($c->slug));

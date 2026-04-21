@@ -6,17 +6,17 @@ const { useState, useEffect, useRef, useMemo } = React;
 
 /* ---------- Category system ---------- */
 const CAT_MAP = {
-  'Linux':      'linux',
-  'Docker':     'docker',
-  'Backend':    'backend',
-  'DevOps':     'devops',
-  'Tools':      'tools',
-  'Daily News': 'news',
-  'Journal':    'journal',
+  '前端前線': 'frontend',
+  '工程趣聞': 'engineering',
+  '平台與維運': 'platform',
+  '後端工坊': 'backend',
+  '產業脈動': 'industry',
+  '資安雷達': 'security',
+  '資料與儲存': 'data',
 };
-const catClass  = (cat) => `tag--${CAT_MAP[cat] || 'accent'}`;
-const catColor  = (cat) => `var(--cat-${CAT_MAP[cat] || 'linux'})`;
-const catTone   = (cat) => CAT_MAP[cat] || 'forest';
+const catClass  = (cat) => `tag--${CAT_MAP[cat] || 'tech'}`;
+const catColor  = (cat) => `var(--cat-${CAT_MAP[cat] || 'frontend'})`;
+const catTone   = (cat) => CAT_MAP[cat] || 'frontend';
 
 /* ---------- Icons (line, thin) ---------- */
 const Icon = {
@@ -42,11 +42,13 @@ const Icon = {
 /* ---------- Header ---------- */
 function SiteHeader({ active, onSearchClick, theme, onToggleTheme }) {
   const items = [
-    { label: 'Linux',   href: 'category.html?c=linux',   cat: 'linux'   },
-    { label: 'Docker',  href: 'category.html?c=docker',  cat: 'docker'  },
-    { label: 'Backend', href: 'category.html?c=backend', cat: 'backend' },
-    { label: 'Tools',   href: 'category.html?c=tools',   cat: 'tools'   },
-    { label: 'About',   href: 'about.html',               cat: null      },
+    { label: '前端前線',  href: 'category.html?c=frontend',    cat: '前端前線'  },
+    { label: '工程趣聞',  href: 'category.html?c=engineering', cat: '工程趣聞'  },
+    { label: '平台與維運', href: 'category.html?c=platform',   cat: '平台與維運' },
+    { label: '後端工坊',  href: 'category.html?c=backend',     cat: '後端工坊'  },
+    { label: '產業脈動',  href: 'category.html?c=industry',    cat: '產業脈動'  },
+    { label: '資安雷達',  href: 'category.html?c=security',    cat: '資安雷達'  },
+    { label: '資料與儲存', href: 'category.html?c=data',       cat: '資料與儲存' },
   ];
   return (
     <header className="site-header">
@@ -399,97 +401,97 @@ const SAMPLE_POSTS = [
     id: 1,
     title: "Docker multi-stage builds: cut your image size by 80%",
     excerpt: "Stop shipping compilers in production. A step-by-step guide to multi-stage Dockerfiles that actually makes sense.",
-    cat: "Docker",
+    cat: "平台與維運",
     date: "Apr 18, 2026",
     read: 10,
     author: "Charlie",
-    imgLabel: "Docker · Deep dive"
+    imgLabel: "平台與維運 · Docker"
   },
   {
     id: 2,
     title: "Nginx as a reverse proxy: the definitive config guide",
     excerpt: "SSL termination, upstream health checks, caching headers — every setting I've needed in five years of running Nginx in prod.",
-    cat: "Backend",
+    cat: "後端工坊",
     date: "Apr 14, 2026",
     read: 14,
     author: "Charlie",
-    imgLabel: "Backend · Config"
+    imgLabel: "後端工坊 · Config"
   },
   {
     id: 3,
     title: "systemd hardening: lock down your services",
     excerpt: "PrivateTmp, NoNewPrivileges, CapabilityBoundingSet — the unit file options that actually matter for security.",
-    cat: "Linux",
+    cat: "資安雷達",
     date: "Apr 08, 2026",
     read: 12,
     author: "Charlie",
-    imgLabel: "Linux · Security"
+    imgLabel: "資安雷達 · Security"
   },
   {
     id: 4,
     title: "PostgreSQL connection pooling with PgBouncer",
     excerpt: "Why your app is exhausting database connections at 500 req/s and how transaction-mode pooling fixes it for good.",
-    cat: "Backend",
+    cat: "資料與儲存",
     date: "Apr 02, 2026",
     read: 9,
     author: "Charlie",
-    imgLabel: "Backend · DB"
+    imgLabel: "資料與儲存 · DB"
   },
   {
     id: 5,
     title: "Linux kernel tuning for high-throughput servers",
     excerpt: "sysctl knobs that actually move the needle: TCP buffer sizes, file descriptor limits, and the settings everyone copies without reading.",
-    cat: "Linux",
+    cat: "平台與維運",
     date: "Mar 26, 2026",
     read: 16,
     author: "Charlie",
-    imgLabel: "Linux · Kernel"
+    imgLabel: "平台與維運 · Kernel"
   },
   {
     id: 6,
     title: "GitHub Actions: reusable workflows done right",
     excerpt: "Stop copy-pasting 200-line YAML. Build composable CI blocks and call them from any repo in your org.",
-    cat: "DevOps",
+    cat: "工程趣聞",
     date: "Mar 19, 2026",
     read: 8,
     author: "Charlie",
-    imgLabel: "DevOps · CI"
+    imgLabel: "工程趣聞 · CI"
   },
   {
     id: 7,
     title: "My terminal setup in 2026: Zsh, Wezterm, tmux",
     excerpt: "The exact config, plugins, and keybindings I've settled on after years of tweaking. Everything is on GitHub.",
-    cat: "Tools",
+    cat: "工程趣聞",
     date: "Mar 12, 2026",
     read: 7,
     author: "Charlie",
-    imgLabel: "Tools · Setup"
+    imgLabel: "工程趣聞 · Setup"
   },
   {
     id: 8,
     title: "Redis as a queue: when SQS is overkill",
     excerpt: "BLPOP, RPUSH, and consumer groups — building a reliable background job system without leaving your existing stack.",
-    cat: "Backend",
+    cat: "資料與儲存",
     date: "Mar 05, 2026",
     read: 11,
     author: "Charlie",
-    imgLabel: "Backend · Redis"
+    imgLabel: "資料與儲存 · Redis"
   },
 ];
 
 const POPULAR_POSTS = [
-  { rank: '01', title: "Docker Compose for local dev: the setup I wish I had five years ago", read: 8,  cat: "Docker"  },
-  { rank: '02', title: "Understanding Linux load average (it's not what you think)", read: 6,  cat: "Linux"   },
-  { rank: '03', title: "Building a zero-downtime deploy pipeline with GitHub Actions", read: 12, cat: "DevOps"  },
-  { rank: '04', title: "Postgres query optimization: EXPLAIN ANALYZE, finally explained", read: 10, cat: "Backend" },
-  { rank: '05', title: "The tools I use every day as a backend developer", read: 5,  cat: "Tools"   },
+  { rank: '01', title: "Docker Compose for local dev: the setup I wish I had five years ago", read: 8,  cat: "平台與維運" },
+  { rank: '02', title: "Understanding Linux load average (it's not what you think)", read: 6,  cat: "平台與維運" },
+  { rank: '03', title: "Building a zero-downtime deploy pipeline with GitHub Actions", read: 12, cat: "工程趣聞"  },
+  { rank: '04', title: "Postgres query optimization: EXPLAIN ANALYZE, finally explained", read: 10, cat: "資料與儲存" },
+  { rank: '05', title: "The tools I use every day as a backend developer", read: 5,  cat: "工程趣聞"  },
 ];
 
 const AFFILIATE_ITEMS = [
-  { name: "Zed Editor",       type: "Editor",   note: "The fastest editor I've used. Rust-native, multiplayer.", tone: "backend" },
-  { name: "TablePlus",        type: "DB GUI",   note: "Finally a DB client that doesn't feel like 2008.",        tone: "linux"   },
-  { name: "Warp Terminal",    type: "Terminal", note: "AI autocomplete that knows your shell context.",           tone: "docker"  },
-  { name: "Proxmox VE",       type: "Infra",    note: "My entire homelab runs on this. Free, powerful.",         tone: "devops"  },
+  { name: "Zed Editor",       type: "Editor",   note: "The fastest editor I've used. Rust-native, multiplayer.", tone: "後端工坊" },
+  { name: "TablePlus",        type: "DB GUI",   note: "Finally a DB client that doesn't feel like 2008.",        tone: "資料與儲存" },
+  { name: "Warp Terminal",    type: "Terminal", note: "AI autocomplete that knows your shell context.",           tone: "工程趣聞" },
+  { name: "Proxmox VE",       type: "Infra",    note: "My entire homelab runs on this. Free, powerful.",         tone: "平台與維運" },
 ];
 
 /* Make available globally */

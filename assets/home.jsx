@@ -266,7 +266,7 @@ function DevToolsBlock() {
             <div className={`img-placeholder img-placeholder--${item.tone}`} style={{aspectRatio:'1/1', borderRadius:4, marginBottom:14}}>
               {item.type}
             </div>
-            <div className="eyebrow" style={{color: catColor(item.tone === 'linux' ? 'Linux' : item.tone === 'docker' ? 'Docker' : item.tone === 'backend' ? 'Backend' : 'DevOps'), marginBottom:6}}>
+            <div className="eyebrow" style={{color: catColor(item.tone), marginBottom:6}}>
               {item.type}
             </div>
             <h4 style={{fontSize:15, fontWeight:500, letterSpacing:'-0.005em', marginBottom:6}}>{item.name}</h4>
