@@ -2,16 +2,12 @@
 get_header();
 while (have_posts()): the_post(); ?>
 
-<main class="container">
+<main class="wrap" style="padding-bottom:var(--s8)">
   <header class="post-header">
     <h1 class="post-title"><?php the_title(); ?></h1>
   </header>
-  <div class="post-layout">
-    <div></div>
-    <div class="post-body">
-      <?php the_content(); ?>
-    </div>
-    <div></div>
+  <div class="page-body">
+    <?php the_content(); ?>
   </div>
 </main>
 

@@ -119,7 +119,13 @@ $cats  = get_categories(['hide_empty' => true]);
 
       <div class="article-grid">
         <?php
-        $latest = new WP_Query(['posts_per_page' => 24, 'offset' => 1]);
+        $cfn_per_page = 24;
+        $cfn_paged    = max(1, (int) get_query_var('paged'), (int) get_query_var('page'));
+        $latest = new WP_Query([
+          'posts_per_page' => $cfn_per_page,
+          // Skip the post shown in the hero/feature slot, then page through the rest.
+          'offset'         => 1 + ($cfn_paged - 1) * $cfn_per_page,
+        ]);
         while ($latest->have_posts()): $latest->the_post();
           $cats = get_the_category();
           $cls  = $cats ? cfn_category_tag_class($cats[0]->slug) : 'tag--tech';
@@ -148,7 +154,21 @@ $cats  = get_categories(['hide_empty' => true]);
         <?php endwhile; wp_reset_postdata(); ?>
       </div>
 
-      <?php the_posts_pagination(['prev_text' => '← Older', 'next_text' => 'Newer →']); ?>
+      <?php
+      // Paginate against the custom $latest query (the main query uses a
+      // different posts_per_page, so the_posts_pagination() would be wrong here).
+      $cfn_links = paginate_links([
+        'total'     => max(1, (int) $latest->max_num_pages),
+        'current'   => $cfn_paged,
+        'prev_text' => '← Newer',
+        'next_text' => 'Older →',
+        'type'      => 'plain',
+      ]);
+      if ($cfn_links): ?>
+        <nav class="navigation pagination" aria-label="Posts">
+          <div class="nav-links"><?php echo $cfn_links; ?></div>
+        </nav>
+      <?php endif; wp_reset_postdata(); ?>
 
     </div><!-- /.home-main -->
 

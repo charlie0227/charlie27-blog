@@ -56,7 +56,7 @@ get_header(); ?>
           <?php endwhile; ?>
         </div>
 
-        <?php the_posts_pagination(['prev_text' => '← Older', 'next_text' => 'Newer →']); ?>
+        <?php the_posts_pagination(['prev_text' => '← Newer', 'next_text' => 'Older →']); ?>
 
         <?php else: ?>
           <p style="color:var(--text-2); padding:var(--s6) 0">No articles found.</p>

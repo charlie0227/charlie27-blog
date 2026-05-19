@@ -144,7 +144,7 @@ function cfn_the_toc() {
     $content = apply_filters('the_content', get_the_content());
     preg_match_all('/<h2[^>]*>(.*?)<\/h2>/i', $content, $m);
     if (empty($m[1])) return;
-    echo '<aside class="post-toc"><h5>Contents</h5><ol>';
+    echo '<aside class="post-toc" aria-label="Table of contents"><span class="post-toc__label">Contents</span><ol>';
     foreach ($m[1] as $i => $heading) {
         $text = wp_strip_all_tags($heading);
         $id   = sanitize_title($text);
@@ -215,8 +215,15 @@ function cfn_category_tag_class($slug) {
         // 產業脈動
         '產業脈動'       => 'tag--industry',
         'industry'       => 'tag--industry',
-        'news'           => 'tag--industry',
-        'daily-news'     => 'tag--industry',
+        // AI 前沿
+        'AI 前沿'        => 'tag--ai',
+        'ai'             => 'tag--ai',
+        'ml'             => 'tag--ai',
+        'llm'            => 'tag--ai',
+        // Daily News
+        'Daily News'     => 'tag--news',
+        'daily-news'     => 'tag--news',
+        'news'           => 'tag--news',
         // 資安雷達
         '資安雷達'       => 'tag--security',
         'security'       => 'tag--security',

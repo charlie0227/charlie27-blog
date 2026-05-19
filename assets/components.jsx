@@ -42,13 +42,13 @@ const Icon = {
 /* ---------- Header ---------- */
 function SiteHeader({ active, onSearchClick, theme, onToggleTheme }) {
   const items = [
-    { label: '前端前線',  href: 'category.html?c=frontend',    cat: '前端前線'  },
-    { label: '工程趣聞',  href: 'category.html?c=engineering', cat: '工程趣聞'  },
-    { label: '平台與維運', href: 'category.html?c=platform',   cat: '平台與維運' },
-    { label: '後端工坊',  href: 'category.html?c=backend',     cat: '後端工坊'  },
-    { label: '產業脈動',  href: 'category.html?c=industry',    cat: '產業脈動'  },
-    { label: '資安雷達',  href: 'category.html?c=security',    cat: '資安雷達'  },
-    { label: '資料與儲存', href: 'category.html?c=data',       cat: '資料與儲存' },
+    { label: '前端前線',  href: 'category.html?c=frontend',    cat: 'frontend'    },
+    { label: '工程趣聞',  href: 'category.html?c=engineering', cat: 'engineering' },
+    { label: '平台與維運', href: 'category.html?c=platform',   cat: 'platform'    },
+    { label: '後端工坊',  href: 'category.html?c=backend',     cat: 'backend'     },
+    { label: '產業脈動',  href: 'category.html?c=industry',    cat: 'industry'    },
+    { label: '資安雷達',  href: 'category.html?c=security',    cat: 'security'    },
+    { label: '資料與儲存', href: 'category.html?c=data',       cat: 'data'        },
   ];
   return (
     <header className="site-header">
@@ -78,9 +78,20 @@ function SiteHeader({ active, onSearchClick, theme, onToggleTheme }) {
           <button className="icon-btn" onClick={onToggleTheme} aria-label="Toggle theme">
             {theme === 'dark' ? <Icon.Sun /> : <Icon.Moon />}
           </button>
-          <a href="#" className="icon-btn" aria-label="RSS"><Icon.Rss /></a>
+          <a href="#" className="icon-btn site-icon-rss" aria-label="RSS"><Icon.Rss /></a>
         </div>
       </div>
+      <nav className="site-nav-mobile" aria-label="Categories">
+        <div className="site-nav-mobile__inner">
+          {items.map(i => (
+            <a key={i.label} href={i.href}
+               className={`site-nav-mobile__link${active === i.label ? ' is-active' : ''}`}>
+              <span className="site-nav-mobile__dot" style={{background:`var(--cat-${i.cat})`}} />
+              {i.label}
+            </a>
+          ))}
+        </div>
+      </nav>
     </header>
   );
 }

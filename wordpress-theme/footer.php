@@ -4,6 +4,7 @@
 
     <div class="footer-col">
       <div class="site-logo" style="font-size:18px; margin-bottom:var(--s3)">
+        <span class="site-logo__dot" aria-hidden="true"></span>
         charlie<span style="opacity:.35;font-weight:400">/</span>dev
       </div>
       <p style="font-size:13px; line-height:1.65; color:var(--text-2); max-width:300px">
